@@ -1,0 +1,203 @@
+.myApplicationsPageWrapper {
+  margin: 40px 0;
+}
+
+.submittedApplicationText {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.jobApplicaitonCardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.jobApplicaitonCard {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.jobRole {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: var(--primary-font);
+  margin-bottom: 5px;
+}
+
+.companyName {
+  font-size: 14px;
+}
+
+.applyDate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--primary-font);
+}
+
+.dateAgo {
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: var(--primary-font);
+}
+
+/* Applicaiton details css start here  */
+
+.applicationDetailsPageWrapper {
+  max-width: 1100px;
+  width: 100%;
+  margin: 30px auto;
+}
+
+.applicationDetailsText {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.applicationInfoWrapper {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px 20px;
+  margin: 20px 0;
+}
+
+.jobDetailsText {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.jobInfoWrapper {
+  display: flex;
+  gap: 35px;
+}
+
+.jobMoreInfo {
+  max-width: 200px;
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.insideJobBorder {
+  width: 2px;
+  height: 100%;
+  border-left: 1px solid#ddd;
+}
+
+.jobTitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.postDate {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.viewJobPost {
+  display: inline-block;
+  margin: 15px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.viewJobPost:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.basicJobInfoWrapper {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.basicJobHeader {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.basicJobInfoTitle {
+  font-size: 13px;
+  font-family: var(--primary-font);
+  color: #8a8a8a;
+  text-transform: uppercase;
+}
+
+.basicJobInfoValue {
+  font-size: 13px;
+  font-family: var(--primary-font);
+  color: #8a8a8a;
+}
+
+.jobBodyInfo {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.jobPostedAt {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-family: var(--primary-font);
+  background-color: rgba(215, 255, 155, 0.267);
+  color: #05c715;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+.job {
+  font-size: 12px;
+  font-family: var(--primary-font);
+  background-color: rgba(167, 167, 167, 0.164);
+  color: #8f8b8b;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+.moreOptionWrapper {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.applicantsWrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #8a8a8a;
+  font-size: 14px;
+  font-family: var(--primary-font);
+}
+
+.coverLetterText {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.coverLetter {
+  white-space: pre-line !important;
+}
+
+/* Applicaiton details css end here  */

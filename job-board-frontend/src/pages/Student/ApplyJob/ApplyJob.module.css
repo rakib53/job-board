@@ -1,0 +1,86 @@
+.applyJobWrraper {
+  max-width: 1000px;
+  width: 100%;
+  margin: 48px auto;
+}
+
+.jobTitle {
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #333;
+  padding-bottom: 20px;
+  font-family: var(--primary-font);
+}
+
+.aboutTheJob {
+  font-family: var(--primary-font);
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.jobDescription {
+  font-size: 16px;
+  line-height: 23px;
+  color: #333;
+  padding-bottom: 20px;
+  font-family: var(--primary-font);
+}
+
+.coverLetterText {
+  color: #333;
+  font-family: var(--primary-font);
+  font-size: 24px;
+  line-height: 1.33333333;
+  font-weight: 600;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+.assessmentQuestion {
+  margin-bottom: 4px;
+  font-size: 14px;
+  line-height: 1.57142857;
+  font-weight: 500;
+  font-family: var(--primary-font);
+  word-break: break-word;
+}
+
+.coverLetterInput {
+  width: 100%;
+  min-height: 250px;
+  resize: none;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #8a8a8a;
+  font-family: var(--primary-font);
+}
+
+.coverLetterInput::placeholder {
+  font-family: var(--primary-font);
+}
+
+.coverLetterInput:focus {
+  border: 1px solid var(--secondary-color);
+}
+
+.avalibility {
+  font-size: 24px;
+  line-height: 1.33333333;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.confirmYouravalibility {
+  font-size: 14px;
+  line-height: 1.57142857;
+  color: #333;
+}
+
+.avalibilityInput {
+  margin: 15px 0 25px;
+}

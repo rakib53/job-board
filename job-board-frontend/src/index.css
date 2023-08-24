@@ -1,0 +1,267 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@font-face {
+  font-family: "rocGroteskLight";
+  src: url("../Font/RocGrotesk-Light.woff2") format("woff2"),
+    url("../Font/RocGrotesk-Light.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "rocGroteskReg";
+  src: url("../Font/RocGrotesk-Regular.woff2") format("woff2"),
+    url("../Font/RocGrotesk-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "rocGroteskMid";
+  src: url("../Font/RocGrotesk-Medium.woff2") format("woff2"),
+    url("../Font/RocGrotesk-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "rocGroteskBold";
+  src: url("../Font/RocGrotesk-Bold.woff2") format("woff2"),
+    url("../Font/RocGrotesk-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "rocGroteskWideBold";
+  src: url("../Font/Roc-Grotesk-WideBold.woff2") format("woff2"),
+    url("../Font/RocGrotesk-WideBold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root {
+  --primary-color: #4640de;
+  --primary-hover: #3833c9;
+  --secondary-color: #26a4ff;
+  --footer-bg: #202430;
+  --base-white: #fff;
+  --base-black: #000000;
+  --border-color: #d6ddeb;
+  /* Fonts  */
+  --primary-font: "Inter", Helvetica, Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif !important;
+}
+
+.container {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.line {
+  display: block;
+  width: 2px;
+  height: auto;
+  background-color: #ddd;
+}
+
+.primaryBtn {
+  text-align: center;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: var(--primary-font);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--primary-color);
+}
+
+/* Secondary custom checkbox */
+
+.secondary-custom-checkbox {
+  display: none; /* Hide the default checkbox */
+}
+
+.secondary-custom-checkbox + label {
+  position: relative;
+  padding-left: 26px;
+  cursor: pointer;
+  color: #2b2f38;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  line-height: 20px;
+}
+
+.secondary-custom-checkbox + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  border: 2px solid #b9bdc7;
+  background: #fff;
+}
+
+.secondary-custom-checkbox:checked + label:before {
+  border-radius: 6px;
+  border: 2px solid #3852db;
+  background: #3852db;
+}
+
+.secondary-custom-checkbox + label:after {
+  content: "";
+  position: absolute;
+  left: 6.5px;
+  top: 2.5px;
+  width: 4px;
+  height: 10px;
+  flex-shrink: 0;
+  border: solid #fff;
+  border-width: 0 2.8px 2.8px 0;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+.secondary-custom-checkbox:checked + label:after {
+  opacity: 1;
+}
+
+.secondary-custom-checkbox:checked + label:after {
+  opacity: 1;
+}
+
+/* Hide the default arrow */
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("../src/assets/icons/down_arrow.png") no-repeat right center;
+  min-width: 140px !important;
+  outline: none;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 11px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease-in;
+}
+
+/* Style the dropdown container */
+.custom-select::-ms-expand {
+  display: none; /* Hide the default arrow in Internet Explorer */
+}
+
+/* Style the options */
+.custom-select option {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+/* Style the selected option */
+.custom-select option:checked {
+  background-color: #5e6266;
+  color: #fff;
+}
+
+/* Style when hovering over options */
+.custom-select option:hover {
+  background-color: #e0e0e0;
+}
+
+.custom-select:focus {
+  border: 1px solid var(--primary-color);
+}
+
+/* Loading css  */
+
+.pageLoadingWrapper {
+  display: flex;
+  margin-top: 280px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+  .pageLoadingWrapper {
+    display: flex;
+    height: 80vh;
+    align-items: center;
+    margin-top: 0;
+    justify-content: center;
+  }
+}
+
+/* Modal Design  */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: fit-content;
+  width: 100%;
+  border-radius: 5px;
+  padding: 30px;
+  border: 1px solid var(--gray-50, #f0f1f3);
+  background: var(--base-white, #fff);
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  z-index: 10000;
+  animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.modalBtnWrapper {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.modalBtn {
+  outline: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: var(--base-white);
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.cancel-delete {
+  background-color: #eb4d4b;
+}
+
+.confirm-delete {
+  background-color: #2ecc71;
+}
+
+.cancel-delete:hover {
+  background-color: #c73e3c;
+}
+
+.confirm-delete:hover {
+  background-color: #25a55a;
+}

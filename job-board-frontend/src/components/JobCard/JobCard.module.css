@@ -1,0 +1,89 @@
+.JobInfoWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.companyLogoWrapper {
+  width: 100px;
+  height: auto;
+}
+
+.companyLogo {
+  width: 100%;
+}
+
+.jobTitle {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: var(--primary-font);
+  margin-bottom: 3px;
+}
+
+.jobLocationAndCompanyName {
+  color: #9b9797;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  font-family: var(--primary-font);
+}
+
+.dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50px;
+  background-color: #9b9797;
+}
+
+.otherInfo {
+  display: flex;
+  gap: 25px;
+}
+
+.CompanyImageAndJobInfo {
+  display: flex;
+  gap: 25px;
+}
+
+.OtherInfoWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoTitle {
+  font-size: 13px;
+  color: #838080;
+  font-weight: 600;
+  font-family: var(--primary-font);
+  margin-top: 15px;
+  display: flex;
+  gap: 5px;
+  align-content: center;
+}
+
+.infoValue {
+  font-size: 13px;
+  color: var(--base-black);
+  font-weight: 500;
+  font-family: var(--primary-font);
+}
+
+.moneyIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.applyBtnWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.capacity {
+  margin-top: 5px;
+  font-size: 13px;
+  font-family: var(--primary-font);
+}

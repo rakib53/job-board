@@ -1,0 +1,41 @@
+.jobSearchInput {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--gray-50, #f0f1f3);
+  background: var(--base-white, #fff);
+  box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.03),
+    0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+}
+
+.inputWrapper {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.input {
+  max-width: 450px;
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+  font-family: "Poppins", sans-serif;
+}
+
+.searchIcon {
+  width: 20px;
+}
+
+.popularSearch {
+  display: block;
+  margin-top: 15px;
+  color: #fff;
+  font-display: 14px;
+  font-family: "Poppins", sans-serif;
+}

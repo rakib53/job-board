@@ -1,0 +1,149 @@
+.JobListingTitle {
+  margin: 10px 0;
+  font-family: var(--primary-font);
+  font-size: 20px;
+}
+
+.JobListingPageWrapper {
+  margin: 30px 0 50px;
+}
+
+.myJobListWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.myJob {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ebebebdd;
+}
+
+.JobTypeAndJobTitleWrapper {
+  max-width: 500px;
+  width: 100%;
+}
+
+.jobTitle {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: var(--primary-font);
+}
+
+.InHouseJob {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.inHouseDot,
+.remoteDot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50px;
+}
+
+.remoteDot {
+  background-color: rgb(5, 189, 5);
+}
+
+.inHouseDot {
+  background-color: rgb(214, 131, 5);
+}
+
+.jobTypeText {
+  font-size: 14px;
+}
+
+.JobStatusWrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.actionsWrapper {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.seeApplicatntsBtn,
+.seeJobDetailsBtn,
+.seeEditPostBtnWrapper a {
+  font-size: 15px;
+  color: var(--base-white);
+  background-color: rgb(12, 138, 12);
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  font-family: var(--primary-font);
+  transition: all 0.3s ease-in-out;
+}
+
+.seeEditPostBtnWrapper a {
+  background-color: #066db3 !important;
+}
+
+.seeJobDetailsBtnWrapper a {
+  border-radius: 5px !important;
+  font-family: var(--primary-font) !important;
+  padding: 10px !important;
+}
+
+.seeApplicatntsBtn:hover {
+  cursor: pointer;
+  background-color: rgb(6, 117, 6);
+}
+
+.seeJobDetailsBtn {
+  background-color: var(--secondary-color);
+}
+
+.CloseIconWrapper {
+  width: 25px;
+  height: 25px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background-color: rgb(226, 87, 87);
+  transition: all 0.5s linear;
+}
+
+.CloseIconWrapper:hover {
+  cursor: pointer;
+  background-color: red;
+  transition: all 0.5s linear;
+}
+
+/* No Job found text css */
+
+.noJobFoundWrapper {
+  display: flex;
+  margin-top: 280px;
+  justify-content: center;
+}
+
+.noJobFoundText {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 500px) {
+  .noJobFoundWrapper {
+    display: flex;
+    height: 80vh;
+    align-items: center;
+    margin-top: 0;
+    justify-content: center;
+  }
+}

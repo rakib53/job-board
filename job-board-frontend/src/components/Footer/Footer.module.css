@@ -1,0 +1,62 @@
+.footerSection {
+  width: 100%;
+  padding-top: 50px;
+  background: var(--footer-bg);
+}
+
+.footerWrapper {
+  display: flex;
+  padding-bottom: 50px;
+  justify-content: space-between;
+}
+
+.footerListTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--base-white);
+  font-family: "Poppins", sans-serif;
+}
+
+.logoAndDesc {
+  max-width: 400px;
+  width: 100%;
+}
+
+.logo {
+  width: 100px;
+  margin-bottom: 30px;
+}
+
+.aboutCompany {
+  color: var(--base-white);
+  font-family: "Poppins", sans-serif;
+}
+
+.footerList {
+  list-style: none;
+}
+
+.linkItem {
+  color: var(--base-white);
+}
+
+.EmailSubscribtion {
+  display: flex;
+  margin-top: 15px;
+}
+
+.subScribtionEmailInput {
+  padding: 10px;
+  width: 100%;
+  outline: none;
+  border: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.copyRightTextWrapper {
+  display: flex;
+  padding: 40px 0;
+  border-top: 1px solid #ddd;
+  font-family: "Poppins", sans-serif;
+}

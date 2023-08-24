@@ -1,0 +1,20 @@
+.filterParentWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterWrapper {
+  margin-bottom: 30px;
+}
+
+.filterTitle {
+  line-height: 30px;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+.filter {
+  line-height: 35px;
+}

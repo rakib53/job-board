@@ -1,0 +1,203 @@
+.JobDetailsPageWrapper {
+  max-width: 1000px;
+  width: 100%;
+  margin: 50px auto;
+}
+
+.JobDetailsWrapper {
+  width: 100%;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.jobAtCompany {
+  text-align: center;
+  font-size: 26px;
+  font-family: var(--primary-font);
+}
+
+.jobAtCompany,
+.jobTitle::first-letter {
+  text-transform: capitalize;
+}
+
+.jobTitle {
+  font-size: 20px;
+  font-family: var(--primary-font);
+  margin-bottom: 5px;
+  color: #3f3f3f;
+}
+
+.companyName {
+  font-size: 16px;
+  font-family: var(--primary-font);
+  margin-bottom: 15px;
+  color: #8a8a8a;
+}
+
+.InHouseJob {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.InHouseJobLocation {
+  font-size: 15px;
+  font-family: var(--primary-font);
+  color: #242424;
+  margin-bottom: 2px;
+}
+
+.basicJobInfoWrapper {
+  display: flex;
+  gap: 80px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.basicJobHeader {
+  display: flex;
+  gap: 5px;
+}
+
+.basicJobInfoTitle {
+  font-size: 14px;
+  font-family: var(--primary-font);
+  margin-bottom: 15px;
+  color: #8a8a8a;
+  text-transform: uppercase;
+}
+
+.basicJobInfoValue {
+  font-size: 14px;
+  font-family: var(--primary-font);
+  color: #8a8a8a;
+}
+
+.jobBodyInfo {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.jobPostedAt {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-family: var(--primary-font);
+  background-color: rgba(215, 255, 155, 0.267);
+  color: #05c715;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+.job {
+  font-size: 12px;
+  font-family: var(--primary-font);
+  background-color: rgba(167, 167, 167, 0.164);
+  color: #8f8b8b;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+.moreOptionWrapper {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.applicantsWrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #8a8a8a;
+  font-size: 14px;
+  font-family: var(--primary-font);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.emptyHeart,
+.fillHeart {
+  width: 25px;
+  height: 25px;
+  color: rgb(223, 21, 21);
+  cursor: pointer;
+}
+
+.line {
+  border-top: 0;
+  border-bottom: 1px solid #d8d6d6;
+  border-right: 0;
+  border-left: 0;
+}
+
+.title {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: #333;
+  font-family: var(--primary-font);
+}
+
+.jobDescription {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  padding-bottom: 8px;
+  color: #484848;
+  font-family: var(--primary-font);
+}
+
+/* Skills section CSS start here  */
+
+.skillsWraper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 8px 0;
+}
+
+.skill {
+  background: #f8f8f8;
+  color: #666;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 15px;
+  line-height: 16px;
+  font-family: var(--primary-font);
+}
+
+.lowerTitle {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: #333;
+  font-family: var(--primary-font);
+}
+.numberOfOpeningWrapper {
+  margin-bottom: 20px;
+}
+
+.applyNowBtnWrapper button {
+  padding: 10px 40px;
+}
+
+/* Skills section CSS end here  */
+
+.applyNowBtn {
+  cursor: no-drop !important;
+  background-color: rgb(192, 191, 191) !important;
+}

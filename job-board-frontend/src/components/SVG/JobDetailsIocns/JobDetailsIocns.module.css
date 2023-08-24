@@ -1,0 +1,12 @@
+.shareIcon {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 50px;
+}
+
+.shareIcon:hover {
+  cursor: pointer;
+  background-color: #e7e3e3;
+  transition: all 0.4s linear;
+}
