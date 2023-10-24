@@ -22,9 +22,13 @@ export default function SavedJob() {
   }
 
   if (!isLoading && !isError && data?.jobs?.length > 0) {
-    content = data?.jobs?.map((job) => {
-      return <JobCard key={job?._id} jobInfo={job?.jobId} />;
-    });
+    content = (
+      <div className={styles.savedJobWrapper}>
+        {data?.jobs?.map((job) => {
+          return <JobCard key={job?._id} jobInfo={job?.jobDetails} />;
+        })}
+      </div>
+    );
   }
 
   if (!isLoading && !isError && data?.jobs?.length === 0) {

@@ -3,15 +3,27 @@ import { apiSlice } from "../api/api";
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getJobs: builder.query({
-      query: (page) => ({
-        url: `api/getJobs?page=${page}`,
+      query: ({
+        page,
+        jobTitle,
+        location,
+        jobType,
+        workLocation,
+        salary,
+        experience,
+      }) => ({
+        url: `api/getJobs?page=${page}&jobTitle=${jobTitle}&location=${location}&jobType=${jobType}&workLocation=${workLocation}&salaryMin=${salary?.salaryMin}&salaryMax=${salary?.salaryMax}&experience=${experience}`,
       }),
+      keepUnusedDataFor: 600,
       providesTags: ["getJobs"],
     }),
     getJob: builder.query({
       query: ({ jobId }) => ({
         url: `api/getJobs/${jobId}`,
       }),
+      providesTags: (result, error, arg) => {
+        return [{ type: "getJob", id: arg }];
+      },
     }),
     deleteJob: builder.mutation({
       query: (jobId) => ({
@@ -28,6 +40,18 @@ export const authApi = apiSlice.injectEndpoints({
         };
       },
       invalidatesTags: ["getJobs"],
+    }),
+    editJob: builder.mutation({
+      query: (data) => {
+        return {
+          url: `api/editJob/${data?.jobId}`,
+          method: "PUT",
+          body: data,
+        };
+      },
+      invalidatesTags: (result, error, arg) => {
+        return ["getJobs", { type: "getJob", id: arg?.data?.jobId }];
+      },
     }),
     getEmployeerJobList: builder.query({
       query: ({ companyId }) => ({
@@ -87,6 +111,7 @@ export const authApi = apiSlice.injectEndpoints({
 export const {
   useGetJobsQuery,
   useCreateJobMutation,
+  useEditJobMutation,
   useGetEmployeerJobListQuery,
   useGetJobQuery,
   useDeleteJobMutation,

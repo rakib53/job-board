@@ -5,8 +5,6 @@ const ConfirmModal = ({ isOpen, onCancel, onConfirm }) => {
     return null;
   }
 
-  console.log(isOpen);
-
   return (
     <div className="modal">
       <div className="modal-content">

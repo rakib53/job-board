@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  getSelectedEmployeeType,
+  getSelectedGender,
+  getSelectedLanguage,
+} from "../../../features/additionalInformation/additionalInformationSlice";
 import { useUpdateUserDataMutation } from "../../../features/auth/authApi";
-import { getUserInfo } from "../../../features/auth/authSlice";
 import ErrorIcon from "../../SVG/ErrorIcon";
 import AccountProgressBar from "../AccountProgressBar/AccountProgressBar";
 import styles from "../SignUp.module.css";
@@ -40,7 +44,7 @@ export default function PersonalInfo() {
     event.preventDefault();
 
     const userData = {
-      _id: user?._id,
+      userRole: user?.role,
       userName,
       email,
       contactNumber,
@@ -80,13 +84,15 @@ export default function PersonalInfo() {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(getUserInfo(updateUserResponse?.user));
+      dispatch(getSelectedGender());
+      dispatch(getSelectedEmployeeType());
+      dispatch(getSelectedLanguage());
       navigate("/preference", {
         replace: true,
         state: userLocation?.state,
       });
     }
-  }, [updateUserResponse?.user, isSuccess]);
+  }, [updateUserResponse?.user, isSuccess, userLocation]);
 
   // Set The default user Name and email after render the component
   useEffect(() => {

@@ -1,20 +1,99 @@
 .filterParentWrapper {
   display: flex;
   flex-direction: column;
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 4px;
 }
 
 .filterWrapper {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .filterTitle {
   line-height: 30px;
   font-weight: 500;
-  font-size: 18px;
-  margin-bottom: 5px;
+  font-size: 16px;
+  margin-bottom: 8px;
   font-family: "Poppins", sans-serif;
 }
 
 .filter {
   line-height: 35px;
 }
+
+.FilterTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filterText {
+  line-height: 30px;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.clearFilter {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+/*  Years of experience firld css start here  */
+
+.yearsOfExperienceField {
+  width: 100%;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.YearfileldContent {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yearsWraper {
+  position: absolute;
+  width: 100%;
+  max-height: 0;
+  top: 42px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  z-index: 1000;
+  overflow: hidden;
+  transition: all 0.1s ease-in;
+  opacity: 0;
+}
+
+.activeYearsWraper {
+  opacity: 1;
+  max-height: 5000px;
+  transition: all 0.3s ease-out;
+}
+
+.yearsWraper span {
+  display: block;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.yearsWraper span:hover {
+  color: #0a02ece8;
+  background-color: #4c46eb33;
+}
+
+/*  Years of experience firld css end here  */

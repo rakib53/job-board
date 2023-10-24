@@ -42,7 +42,7 @@ export default function JobListCard({ job = {}, handleDeleteJobPost }) {
           </Link>
         </div>
         <div className={styles.seeEditPostBtnWrapper}>
-          <Link to={`/job/${jobId}`} className="primaryBtn">
+          <Link to={`/edit-job/${jobId}`} className="primaryBtn">
             Edit post
           </Link>
         </div>

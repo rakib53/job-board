@@ -1,0 +1,180 @@
+.resumePageWrapper {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto 50px;
+}
+
+.resumeText {
+  color: #333;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+.note {
+  display: block;
+  text-align: center;
+  color: #945e12;
+  background-color: #fffaeb;
+  font-size: 15px;
+  padding: 15px 10px;
+  border-radius: 5px;
+  border: 1px solid #ffef85;
+  margin-bottom: 15px;
+}
+
+.resumeWrapper {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 40px;
+}
+
+.resumeHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.studentName {
+  font-size: 28px;
+  line-height: 36px;
+  color: #333;
+  font-weight: 600;
+}
+
+.email {
+  color: #333;
+  margin-bottom: 4px;
+  word-break: break-word;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.download {
+  color: #008bdc;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.downloadIocn {
+  font-size: 20px;
+}
+
+.line {
+  margin: 20px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 0;
+}
+
+.informationRow {
+  display: flex;
+}
+
+.propretyName {
+  width: 230px;
+  margin-right: 70px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #666;
+  letter-spacing: 0.5px;
+}
+
+.informationAndDeleteAndEdit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.informationParentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.allInformationWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.informationWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skillsWrapper {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.skillsInformationWrapper {
+  width: 304px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.socialLinkWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.socialMediaLink {
+  color: blue;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  cursor: pointer;
+}
+
+.informationTitle {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+
+.moreinfo {
+  word-break: break-word;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.deleteAndEditWrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.editIcon,
+.deleteIcon {
+  font-size: 22px;
+  color: #666666;
+  cursor: pointer;
+}
+
+.addNewInfo {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #008bdc;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.plusIcon {
+  font-size: 18px;
+}

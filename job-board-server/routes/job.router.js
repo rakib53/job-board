@@ -7,6 +7,7 @@ const {
   postSavedJob,
   getSavedJob,
   getSavedJobs,
+  editJob,
 } = require("../controller/job.controller");
 const { verifyJsonWebToken } = require("../controller/users.controller");
 const router = require("express").Router();
@@ -16,6 +17,7 @@ router.get("/getJobs/:jobId", getJobDetails);
 router.get("/getSavedJob/:userId/:jobId", verifyJsonWebToken, getSavedJob);
 router.get("/getSavedJobs/:userId", verifyJsonWebToken, getSavedJobs);
 router.post("/createJob", verifyJsonWebToken, createJob);
+router.put("/editJob/:jobId", verifyJsonWebToken, editJob);
 router.post("/postSavedJob", verifyJsonWebToken, postSavedJob);
 router.get(
   "/getEmployeerJobList/:companyId",

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 import LoadinSVG from "../../../components/Loading/LoadinSVG";
+import ConfirmModal from "../../../components/Modals/ConfirmModal";
 import {
   useDeleteJobMutation,
   useGetEmployeerJobListQuery,

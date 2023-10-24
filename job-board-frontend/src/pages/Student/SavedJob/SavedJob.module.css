@@ -2,6 +2,12 @@
   margin: 20px 0;
 }
 
+.savedJobWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .savedJobText {
   margin-bottom: 15px;
 }

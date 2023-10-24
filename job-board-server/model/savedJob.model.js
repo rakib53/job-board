@@ -6,6 +6,7 @@ const saveJob = mongoose.Schema({
   },
   jobId: {
     type: String,
+    ref: "Jobs",
   },
   company: {
     type: String,

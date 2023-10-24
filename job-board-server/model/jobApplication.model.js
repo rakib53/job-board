@@ -15,6 +15,7 @@ const jobApplication = mongoose.Schema({
   },
   coverLetter: String,
   jobTerms: String,
+  viewApplication: Boolean,
   timeStamp: Number,
 });
 

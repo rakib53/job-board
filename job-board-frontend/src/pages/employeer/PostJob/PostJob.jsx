@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import SuccessJobPostModal from "../../../components/Modals/SuccessJobPostModal";
 import ErrorIcon from "../../../components/SVG/ErrorIcon";
 import { useCreateJobMutation } from "../../../features/jobSlice/jobApi";
 import styles from "./PostJob.module.css";
 import ExperienceInput from "./postJobComp/ExperienceInput";
-import FullTimePartTime from "./postJobComp/FullTimePartTime";
 import JobDescription from "./postJobComp/JobDescription";
 import JobTitle from "./postJobComp/JobTitle";
 import JobType from "./postJobComp/JobType";
+import JoinAndApplyEndDate from "./postJobComp/JoinAndApplyEndDate";
+import NumberOfOpeningJob from "./postJobComp/NumberOfOpeningJob";
 import SalaryInput from "./postJobComp/SalaryInput";
+import WorkLocation from "./postJobComp/WorkLocation";
 
 export default function PostJob() {
   const [error, setError] = useState({
@@ -21,10 +24,10 @@ export default function PostJob() {
     numberOfOpenError: false,
     descriptionError: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Getting The user data through redux
   const { user } = useSelector((state) => state.authSlice);
-  const { companyInfo } = useSelector((state) => state.companySlice);
 
   // Internal state for form data management
   const [probation, setProbation] = useState({
@@ -39,20 +42,32 @@ export default function PostJob() {
     error: false,
   });
   const [experience, setExperience] = useState({
-    selectedExperience: "0 - 2 Years",
+    experienceNumber: "1",
+    experienceRange: { from: "0", to: "2" },
+    experienceType: "fixedExperience",
+    error: false,
+    errorMessage: "",
+  });
+  const [joinDate, setJoinDate] = useState({
+    joinDate: "",
     error: false,
   });
-  const [joinDate, setJoinDate] = useState("");
-  const [applyEndDate, setApplyEndDate] = useState("");
+  const [applyEndDate, setApplyEndDate] = useState({
+    applyEndDate: "",
+    error: false,
+  });
+  const [workLocation, setWorkLocation] = useState({
+    error: false,
+    workLocation: "",
+  });
   const [jobType, setJobType] = useState({
     error: false,
     jobType: "",
   });
-  const [fullTimePartTime, setFullTimePartTime] = useState({
+  const [numberOfOpen, setNumberOfOpen] = useState({
+    numberOfOpen: "",
     error: false,
-    fullTimePartTime: "",
   });
-  const [numberOfOpen, setNumberOfOpen] = useState("");
   const [description, setDescription] = useState({
     error: false,
     description: "",
@@ -66,13 +81,12 @@ export default function PostJob() {
     error: false,
   });
 
-  const [createJob, { data, isError }] = useCreateJobMutation();
+  const [createJob, { data: jobAddedResponse, isLoading, isError, isSuccess }] =
+    useCreateJobMutation();
 
   const handleSubmitPost = () => {
     const newJob = {
       companyId: user?.companyId,
-      companyName: companyInfo?.companyName,
-      companyLocation: companyInfo?.companyLocation,
       userId: user?._id,
       probation,
       jobTitle,
@@ -81,6 +95,7 @@ export default function PostJob() {
       joinDate,
       applyEndDate,
       jobType,
+      workLocation,
       numberOfOpen,
       description,
     };
@@ -90,11 +105,36 @@ export default function PostJob() {
     } else {
       return setJobTitle({ ...jobTitle, error: true });
     }
-    if (experience.selectedExperience) {
-      newJob.experience = experience.selectedExperience;
-    } else {
-      return setExperience({ ...experience, error: true });
+
+    if (experience?.experienceType === "fixedExperience") {
+      const fixedExperienceYear = parseInt(experience.experienceNumber);
+      if (experience?.experienceNumber === "5+") {
+        newJob.experience = {
+          experienceRange: { to: 6, from: 6 },
+        };
+      } else {
+        newJob.experience = {
+          experienceRange: {
+            to: fixedExperienceYear,
+            from: fixedExperienceYear,
+          },
+        };
+      }
+    } else if (experience?.experienceType === "Between") {
+      const experienceRangeFrom = parseInt(experience?.experienceRange?.from);
+      const experienceRangeTo = parseInt(experience?.experienceRange?.to);
+      console.log(experienceRangeFrom, experienceRangeTo);
+      if (experience.experienceRange.to === "5+") {
+        newJob.experience = {
+          experienceRange: { from: experienceRangeFrom, to: 6 },
+        };
+      } else {
+        newJob.experience = {
+          experienceRange: { from: experienceRangeFrom, to: experienceRangeTo },
+        };
+      }
     }
+
     if (
       salary?.salaryAmount.length <= 0 &&
       salary.salaryRange.from.length <= 0 &&
@@ -103,33 +143,127 @@ export default function PostJob() {
       return setSalary({ ...salary, error: true });
     } else {
       if (salary.salaryType === "Fixed") {
+        const currency = salary?.selectedCurrency;
+        const salaryFrequency = salary?.salaryFrequency.toLocaleLowerCase();
+        let salaryValue = parseInt(salary?.salaryAmount);
+
+        if (currency === "USD") {
+          if (salaryFrequency === "day") {
+            salaryValue = salaryValue * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            console.log("USD month");
+            salaryValue = salaryValue * 12;
+          }
+        } else if (currency === "EURO") {
+          if (salaryFrequency === "day") {
+            salaryValue = salaryValue * 1.07 * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryValue = salaryValue * 1.07 * 12;
+          } else if (salaryFrequency === "year") {
+            salaryValue = salaryValue * 1.07;
+          }
+        } else if (currency === "BDT") {
+          if (salaryFrequency === "day") {
+            salaryValue = salaryValue * 0.0091 * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryValue = salaryValue * 0.0091 * 12;
+          } else if (salaryFrequency === "year") {
+            salaryValue = salaryValue * 0.0091;
+          }
+        } else if (currency === "INR") {
+          if (salaryFrequency === "day") {
+            salaryValue = salaryValue * 0.012 * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryValue = salaryValue * 0.012 * 12;
+          } else if (salaryFrequency === "year") {
+            salaryValue = salaryValue * 0.012;
+          }
+        }
         newJob.salary = {
-          selectedCurrency: salary?.selectedCurrency,
-          salaryFrequency: salary?.salaryFrequency,
-          salaryRange: { to: salary?.salaryAmount },
+          salaryRange: { from: Math.ceil(salaryValue) },
         };
       } else if (salary.salaryType === "basedOnPerformance") {
+        const currency = salary?.selectedCurrency;
+        const salaryFrequency = salary?.salaryFrequency.toLocaleLowerCase();
+        let salaryFirst = parseInt(salary?.salaryRange.from);
+        let salarySecond = parseInt(salary?.salaryRange.to);
+
+        if (currency === "USD") {
+          if (salaryFrequency === "day") {
+            salaryFirst = salaryFirst * 30 * 12;
+            salarySecond = salarySecond * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryFirst = salaryFirst * 12;
+            salarySecond = salarySecond * 12;
+          }
+        } else if (currency === "EURO") {
+          if (salaryFrequency === "day") {
+            salaryFirst = salaryFirst * 1.07 * 30 * 12;
+            salarySecond = salarySecond * 1.07 * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryFirst = salaryFirst * 1.07 * 12;
+            salarySecond = salarySecond * 1.07 * 12;
+          } else if (salaryFrequency === "year") {
+            salaryFirst = salaryFirst * 1.07;
+            salarySecond = salarySecond * 1.07;
+          }
+        } else if (currency === "BDT") {
+          if (salaryFrequency === "day") {
+            salaryFirst = salaryFirst * 0.0091 * 30 * 12;
+            salarySecond = salarySecond * 0.0091 * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryFirst = salaryFirst * 0.0091 * 12;
+            salarySecond = salarySecond * 0.0091 * 12;
+          } else if (salaryFrequency === "year") {
+            salaryFirst = salaryFirst * 0.0091;
+            salarySecond = salarySecond * 0.0091;
+          }
+        } else if (currency === "INR") {
+          if (salaryFrequency === "day") {
+            salaryFirst = salaryFirst * 0.012 * 30 * 12;
+            salarySecond = salarySecond * 0.012 * 30 * 12;
+          } else if (salaryFrequency === "month") {
+            salaryFirst = salaryFirst * 0.012 * 12;
+            salarySecond = salarySecond * 0.012 * 12;
+          } else if (salaryFrequency === "year") {
+            salaryFirst = salaryFirst * 0.012;
+            salarySecond = salarySecond * 0.012;
+          }
+        }
+
         newJob.salary = {
-          selectedCurrency: salary?.selectedCurrency,
-          salaryFrequency: salary?.salaryFrequency,
           salaryRange: {
-            from: salary?.salaryRange.from,
-            to: salary?.salaryRange.to,
+            from: Math.ceil(salaryFirst),
+            to: Math.ceil(salarySecond),
           },
         };
       }
     }
-    if (!joinDate) {
-      return setError({ ...error, joinDateError: true });
-    }
-    if (!applyEndDate) {
-      return setError({ ...error, applyEndDateError: true });
-    }
-    if (!jobType?.jobType) {
-      return setJobType({ ...jobType, error: true });
+
+    if (!joinDate.joinDate) {
+      return setJoinDate({ ...joinDate, error: true });
     } else {
-      newJob.jobType = jobType?.jobType;
+      newJob.joinDate = joinDate.joinDate;
     }
+
+    if (!applyEndDate.applyEndDate) {
+      return setApplyEndDate({ ...applyEndDate, error: true });
+    } else {
+      newJob.applyEndDate = applyEndDate.applyEndDate;
+    }
+
+    if (workLocation?.workLocation) {
+      newJob.workLocation = workLocation?.workLocation;
+    } else {
+      return setWorkLocation({ ...workLocation, error: true });
+    }
+
+    if (jobType?.jobType) {
+      newJob.jobType = jobType?.jobType;
+    } else {
+      return setJobType({ ...jobType, error: true });
+    }
+
     if (probation.probation) {
       if (!probation.probationPeriodNumber) {
         return setError({ ...error, probationPeriodError: true });
@@ -138,23 +272,65 @@ export default function PostJob() {
         return setError({ ...error, probationSalaryError: true });
       }
     }
-    if (!numberOfOpen) {
-      return setError({ ...error, numberOfOpenError: true });
+
+    if (!numberOfOpen?.numberOfOpen) {
+      return setNumberOfOpen({ ...numberOfOpen, error: true });
+    } else {
+      newJob.numberOfOpen = parseInt(numberOfOpen?.numberOfOpen);
     }
+
     if (description?.description?.length > 10) {
       newJob.description = description?.description;
     } else {
       return setDescription({ ...description, error: true });
     }
     createJob(newJob);
+    // console.log(newJob);
   };
+
+  // Close the modal when click post another
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setJobTitle({ ...jobTitle, title: "" });
+    setJobType({ ...jobType, jobType: "" });
+    setWorkLocation({ ...workLocation, workLocation: "" });
+    setApplyEndDate("");
+    setJoinDate("");
+    setExperience({
+      ...experience,
+      experienceType: "fixedExperience",
+    });
+    setSalary({ ...salary, salaryType: "Fixed", salaryAmount: "" });
+    setNumberOfOpen("");
+    setDescription({ ...description, description: "" });
+  };
+
+  // Open the modal when post created
+  useEffect(() => {
+    if (jobAddedResponse?.job?._id) {
+      setIsModalOpen(true);
+    }
+  }, [jobAddedResponse]);
+
+  if (isLoading) {
+    return (
+      <div className="initialLoadingWrapper">
+        <div className="contentLoader"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
       <div className={styles.InputFormWrapper}>
-        <div className={styles.inputWrapper}>
-          <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
-        </div>
+        <SuccessJobPostModal
+          isOpen={isModalOpen}
+          content={{ title: "Successfully Added job!" }}
+          handleCloseModal={handleCloseModal}
+        />
+
+        {/* Job title */}
+        <JobTitle jobTitle={jobTitle} setJobTitle={setJobTitle} />
 
         {/* Experience */}
         <ExperienceInput
@@ -166,61 +342,21 @@ export default function PostJob() {
         <SalaryInput salary={salary} setSalary={setSalary} />
 
         {/* Join Date and Apply date */}
-        <div className={styles.JoinDateAndJobExpireWrapper}>
-          {/* Join Date */}
-          <div style={{ width: "300px" }}>
-            <label htmlFor="joinDate">Join date:</label>
-            <input
-              type="date"
-              id="joinDate"
-              name="joinDate"
-              className={styles.input}
-              value={joinDate}
-              onChange={(e) => setJoinDate(e.target.value)}
-              onClick={() => setError({ ...error, joinDateError: false })}
-            />
-            <div
-              className={` ${styles.errorWrapper} ${
-                error.joinDateError && styles.seeError
-              }`}
-            >
-              <ErrorIcon />
-              <span className={styles.error}>
-                You must provide a job join date!
-              </span>
-            </div>
-          </div>
-
-          {/* Job Expires In */}
-          <div style={{ width: "300px" }}>
-            <label htmlFor="applyEndTime">Apply End time:</label>
-            <input
-              type="date"
-              id="applyEndTime"
-              name="applyEndTime"
-              value={applyEndDate}
-              onChange={(e) => setApplyEndDate(e.target.value)}
-              onClick={() => setError({ ...error, applyEndDateError: false })}
-              className={styles.input}
-            />
-            <div
-              className={` ${styles.errorWrapper} ${
-                error.applyEndDateError && styles.seeError
-              }`}
-            >
-              <ErrorIcon />
-              <span className={styles.error}>
-                You must provide a job apply end date!
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <JobType jobType={jobType} setJobType={setJobType} />
-        <FullTimePartTime
-          fullTimePartTime={fullTimePartTime}
-          setFullTimePartTime={setFullTimePartTime}
+        <JoinAndApplyEndDate
+          joinDate={joinDate}
+          setJoinDate={setJoinDate}
+          applyEndDate={applyEndDate}
+          setApplyEndDate={setApplyEndDate}
         />
+
+        {/* Work location */}
+        <WorkLocation
+          workLocation={workLocation}
+          setWorkLocation={setWorkLocation}
+        />
+
+        {/* Job Location */}
+        <JobType jobType={jobType} setJobType={setJobType} />
 
         {/* Probation */}
         <div className={styles.inputWrapper}>
@@ -355,29 +491,10 @@ export default function PostJob() {
         </div>
 
         {/* Job Numbers of opening */}
-        <div className={styles.inputWrapper}>
-          <label htmlFor="companyName">Numbers of opening*</label>
-          <input
-            className={styles.input}
-            type="number"
-            name="numbersInOpening"
-            id="numbersInOpening"
-            placeholder="Numbers of opening"
-            value={numberOfOpen}
-            onChange={(e) => setNumberOfOpen(e.target.value)}
-            onClick={() => setError({ ...error, numberOfOpenError: false })}
-          />
-          <div
-            className={` ${styles.errorWrapper} ${
-              error.numberOfOpenError && styles.seeError
-            }`}
-          >
-            <ErrorIcon />
-            <span className={styles.error}>
-              Please specify the number of job oppurtunity you have!
-            </span>
-          </div>
-        </div>
+        <NumberOfOpeningJob
+          numberOfOpen={numberOfOpen}
+          setNumberOfOpen={setNumberOfOpen}
+        />
 
         {/* Job Description */}
         <JobDescription
@@ -389,6 +506,7 @@ export default function PostJob() {
           <button
             type="submit"
             className="primaryBtn"
+            disabled={isLoading}
             onClick={() => handleSubmitPost()}
           >
             Post job

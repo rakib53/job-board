@@ -8,12 +8,23 @@ export default function Dashboard() {
   return (
     <div className="container">
       <div className={styles.DashboardPageWrapper}>
-        {" "}
-        <div className={styles.userNameAndWaving}>
-          <h1>{user?.userName}!</h1>
-          <img className={styles.wavingHandImamge} src={wavingHand} alt="" />
+        <div className={styles.studentInfo}>
+          <div>
+            <div className={styles.userNameAndWaving}>
+              <h1>Hello, {user?.userName}!</h1>
+              <img
+                className={styles.wavingHandImamge}
+                src={wavingHand}
+                alt=""
+              />
+            </div>
+            <p style={{ textAlign: "center" }}>
+              Let's help you land your dream career.
+            </p>
+          </div>
         </div>
-        <p>Let’s help you land your dream career</p>
+
+        <div className={styles.StudentDashboard}></div>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const useAuthCheck = () => {
       dispatch(getUserInfo(userData?.user));
       setIsAuth(true);
     }
-  }, [isError, isLoading, userData?.user, userData?.user?._id, token, user]);
+  }, [isError, isLoading, userData?.user, userData?.user?._id]);
 
   return isAuth;
 };

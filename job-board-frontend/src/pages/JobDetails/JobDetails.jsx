@@ -1,7 +1,7 @@
 import React from "react";
+import { CiEdit } from "react-icons/ci";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import LoadinSVG from "../../components/Loading/LoadinSVG";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ApplicantIcon from "../../components/SVG/JobDetailsIocns/ApplicantIcon";
 import ApplyDateIcon from "../../components/SVG/JobDetailsIocns/ApplyDateIcon";
 import CTCAnualIcon from "../../components/SVG/JobDetailsIocns/CTCAnualIcon";
@@ -37,23 +37,6 @@ function formatUSD(number, digits) {
   return formattedNumber;
 }
 
-// Customize the salay in visulizatio
-const CustomizeSalary = (currenciesType, salary) => {
-  let currencySymbol = null;
-
-  if (currenciesType === "USD") {
-    currencySymbol = "$";
-  } else if (currenciesType === "EURO") {
-    currencySymbol = "€";
-  } else if (currenciesType === "BDT") {
-    currencySymbol = "৳";
-  } else if (currenciesType === "INR") {
-    currencySymbol = "₹";
-  }
-
-  return currencySymbol + " " + formatUSD(salary);
-};
-
 export default function JobDetails() {
   const { jobId } = useParams();
   const navigate = useNavigate();
@@ -73,9 +56,9 @@ export default function JobDetails() {
   let content;
 
   if (isLoading) {
-    content = (
-      <div>
-        <LoadinSVG />
+    return (
+      <div className="initialLoadingWrapper">
+        <div className="contentLoader"></div>
       </div>
     );
   }
@@ -94,6 +77,7 @@ export default function JobDetails() {
       numberOfOpen,
       probation,
       salary,
+      applicants,
       _id,
     } = jobDetails?.jobDetails;
 
@@ -136,19 +120,15 @@ export default function JobDetails() {
                 <p className={styles.basicJobInfoTitle}>Salary</p>
               </div>
               <span className={styles.basicJobInfoValue}>
-                {salary?.salaryRange?.from
-                  ? `${CustomizeSalary(
-                      salary?.selectedCurrency,
-                      salary?.salaryRange?.from
-                    )} - ${CustomizeSalary(
-                      salary?.selectedCurrency,
-                      salary?.salaryRange?.to
-                    )}`
-                  : CustomizeSalary(
-                      salary?.selectedCurrency,
-                      salary?.salaryRange?.to
-                    )}{" "}
-                {` /${salary?.salaryFrequency.toLowerCase()}`}
+                {salary?.salaryRange?.from &&
+                  salary?.salaryRange?.to &&
+                  `$ ${formatUSD(salary?.salaryRange?.from)} - ${formatUSD(
+                    salary?.salaryRange?.to
+                  )}`}
+
+                {salary?.salaryRange?.from &&
+                  !salary?.salaryRange?.to &&
+                  `$ ${formatUSD(salary?.salaryRange?.from)}`}
               </span>
             </div>
             <div className={styles.basicJobCard}>
@@ -156,7 +136,12 @@ export default function JobDetails() {
                 <ExperienceIcon />
                 <p className={styles.basicJobInfoTitle}>EXPERIENCE</p>
               </div>
-              <span className={styles.basicJobInfoValue}>{experience}</span>
+              <span className={styles.basicJobInfoValue}>
+                {experience?.experienceRange?.to !==
+                experience?.experienceRange?.from
+                  ? `${experience?.experienceRange?.from} - ${experience?.experienceRange?.to} years`
+                  : `${experience?.experienceRange?.from} years`}
+              </span>
             </div>
             <div className={styles.basicJobCard}>
               <div className={styles.basicJobHeader}>
@@ -178,16 +163,38 @@ export default function JobDetails() {
           </div>
 
           <div className={styles.moreOptionWrapper}>
-            <div className={styles.applicantsWrapper}>
-              <ApplicantIcon />
-              <span>98 applicants</span>
-            </div>
+            {applicants ? (
+              <div className={styles.applicantsWrapper}>
+                <ApplicantIcon />
+                <span>
+                  {applicants === 0 ? (
+                    "No applicant applied"
+                  ) : (
+                    <>
+                      {applicants}{" "}
+                      {applicants === 1 ? `applicant` : `applicants`}{" "}
+                    </>
+                  )}
+                </span>
+              </div>
+            ) : (
+              <p></p>
+            )}
+
             <div className={styles.iconWrapper}>
-              <SavedJob
-                userId={user?._id}
-                jobId={_id}
-                companyId={company?._id}
-              />
+              {user?.role !== "employeer" && (
+                <SavedJob
+                  userId={user?._id}
+                  jobId={_id}
+                  companyId={company?._id}
+                />
+              )}
+
+              {user?.role === "employeer" && (
+                <Link to={`/edit-job/${jobId}`}>
+                  <CiEdit className={styles.editJobIcon} />
+                </Link>
+              )}
 
               <ShareJobIcon />
             </div>
@@ -196,7 +203,7 @@ export default function JobDetails() {
           <hr className={styles.line} />
           <div>
             <h4 className={styles.title}>About the job</h4>
-            <div dangerouslySetInnerHTML={{ __html: description }} />
+            <p className={styles.jobDescription}>{description}</p>
           </div>
           <div>
             <h4 className={styles.title}>Skill(s) required</h4>
@@ -229,19 +236,15 @@ export default function JobDetails() {
 
             <p className={styles.jobDescription}>
               Salary:{" "}
-              {salary?.salaryRange?.from
-                ? `${CustomizeSalary(
-                    salary?.selectedCurrency,
-                    salary?.salaryRange?.from
-                  )} - ${CustomizeSalary(
-                    salary?.selectedCurrency,
-                    salary?.salaryRange?.to
-                  )}`
-                : CustomizeSalary(
-                    salary?.selectedCurrency,
-                    salary?.salaryRange?.to
-                  )}
-              {` /${salary?.salaryFrequency.toLowerCase()}`}
+              {salary?.salaryRange?.from &&
+                salary?.salaryRange?.to &&
+                `${
+                  formatUSD(salary?.salaryRange?.from) -
+                  formatUSD(salary?.salaryRange?.to)
+                }`}
+              {salary?.salaryRange?.from &&
+                !salary?.salaryRange?.to &&
+                `$ ${formatUSD(salary?.salaryRange?.from)}`}
             </p>
           </div>
 

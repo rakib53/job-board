@@ -4,7 +4,7 @@ import styles from "../PostJob.module.css";
 
 export default function JobTitle({ jobTitle, setJobTitle }) {
   return (
-    <>
+    <div className={styles.inputWrapper}>
       <label htmlFor="companyName">Job title*</label>
 
       <input
@@ -14,8 +14,9 @@ export default function JobTitle({ jobTitle, setJobTitle }) {
         id="jobTitle"
         placeholder="Enter job title"
         value={jobTitle.title}
-        onChange={(e) => setJobTitle({ ...jobTitle, title: e.target.value })}
-        onClick={() => setJobTitle({ ...jobTitle, error: false })}
+        onChange={(e) =>
+          setJobTitle({ ...jobTitle, title: e.target.value, error: false })
+        }
       />
 
       <div
@@ -28,6 +29,6 @@ export default function JobTitle({ jobTitle, setJobTitle }) {
           Job title must be atleast 8 charactor
         </span>
       </div>
-    </>
+    </div>
   );
 }

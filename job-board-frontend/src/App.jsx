@@ -10,30 +10,38 @@ import Preference from "./components/SignUp/Preference/Preference";
 import SignUp from "./components/SignUp/SignUp";
 import useAuthCheck from "./hooks/useAuthCheck";
 import WithNavbar from "./layout/WithNavbar";
+import WithNavbarAndFooter from "./layout/WithNavbarAndFooter";
 import FindYourJobNotUser from "./pages/FindYourJob/FindYourJobNotUser";
 import JobDetails from "./pages/JobDetails/JobDetails";
 import ApplyJob from "./pages/Student/ApplyJob/ApplyJob";
+import StudentDashboard from "./pages/Student/Dashboard/Dashboard";
 import ApplicationDetails from "./pages/Student/MyApplications/ApplicationDetails";
 import MyApplications from "./pages/Student/MyApplications/MyApplications";
+import Resume from "./pages/Student/Resume/Resume";
 import SavedJob from "./pages/Student/SavedJob/SavedJob";
+import AllApplications from "./pages/employeer/AllApplications/AllApplications";
 import Applicants from "./pages/employeer/Applicants/Applicants";
 import CompanyProfile from "./pages/employeer/CompanyProfile/CompanyProfile";
 import EmployeerDashboard from "./pages/employeer/Dashboard/Dashboard";
+import EditPost from "./pages/employeer/EditPost/EditPost";
 import JobListing from "./pages/employeer/JobListing/JobListing";
 import OrganizationInfo from "./pages/employeer/OrganizationInfo/OrganizationInfo";
 import PostJob from "./pages/employeer/PostJob/PostJob";
-import StudentDashboard from "./pages/student/Dashboard/Dashboard";
 
 function App() {
   const authChecked = useAuthCheck();
 
   return !authChecked ? (
-    <h1>Loading...</h1>
+    <div className="initialLoadingWrapper">
+      <div class="initialLoader"></div>
+    </div>
   ) : (
     <div>
       <Routes>
         {/* Public Route  */}
         <Route path="/" element={<FindYourJobNotUser />}></Route>
+
+        {/* Job details */}
         <Route
           path="/job/:jobId"
           element={
@@ -73,11 +81,9 @@ function App() {
           path="/employeer/dashboard"
           element={
             <EmployeerPrivateRoute>
-              <PrivateEmployeer>
-                <WithNavbar>
-                  <EmployeerDashboard />
-                </WithNavbar>
-              </PrivateEmployeer>
+              <WithNavbarAndFooter>
+                <EmployeerDashboard />
+              </WithNavbarAndFooter>
             </EmployeerPrivateRoute>
           }
         ></Route>
@@ -104,6 +110,20 @@ function App() {
               <PrivateEmployeer>
                 <WithNavbar>
                   <PostJob />
+                </WithNavbar>
+              </PrivateEmployeer>
+            </EmployeerPrivateRoute>
+          }
+        ></Route>
+
+        {/* Employeer Edit Job Post Page */}
+        <Route
+          path="/edit-job/:jobId"
+          element={
+            <EmployeerPrivateRoute>
+              <PrivateEmployeer>
+                <WithNavbar>
+                  <EditPost />
                 </WithNavbar>
               </PrivateEmployeer>
             </EmployeerPrivateRoute>
@@ -146,15 +166,27 @@ function App() {
           }
         ></Route>
 
+        {/*  Emplopyeer All applications */}
+        <Route
+          path="/employeer/all-applications"
+          element={
+            <EmployeerPrivateRoute>
+              <WithNavbarAndFooter>
+                <AllApplications />
+              </WithNavbarAndFooter>
+            </EmployeerPrivateRoute>
+          }
+        ></Route>
+
         {/* Student Routes */}
         {/* Student Dashboard */}
         <Route
           path="/student/dashboard"
           element={
             <LoginProtectedRoute>
-              <WithNavbar>
+              <WithNavbarAndFooter>
                 <StudentDashboard />
-              </WithNavbar>
+              </WithNavbarAndFooter>
             </LoginProtectedRoute>
           }
         ></Route>
@@ -214,6 +246,17 @@ function App() {
             <LoginProtectedRoute>
               <WithNavbar>
                 <SavedJob />
+              </WithNavbar>
+            </LoginProtectedRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/student/resume"
+          element={
+            <LoginProtectedRoute>
+              <WithNavbar>
+                <Resume />
               </WithNavbar>
             </LoginProtectedRoute>
           }

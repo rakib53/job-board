@@ -1,29 +1,40 @@
 import React, { useEffect, useRef, useState } from "react";
+import { GrClose } from "react-icons/gr";
+import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import LOGO from "../../assets/logo/job.png";
 import { logut } from "../../features/auth/authSlice";
+import { getCompanyInfo } from "../../features/companySlice/companySlice";
 import MessageIcon from "../SVG/MessageIcon";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const [expandMenu, setExpandMenu] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
   const expandUserMenuRef = useRef(null);
+  const expandUserWithMobileMenuRef = useRef(null);
   const location = useLocation();
   // User Data
-  const { user } = useSelector((state) => state.authSlice);
-  const { _id, userName, email, role, accountCompeletation } = user;
+  const { user, token } = useSelector((state) => state.authSlice);
+  const { _id, userName, email, role, accountCompeletation } = user || {};
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
     setExpandMenu(false);
     dispatch(logut());
+    dispatch(getCompanyInfo({}));
     return <Navigate to="/" replace={true} />;
   };
 
   // close Expand menu when clicking menu list
   const handleCloseExpandMenu = () => {
     setExpandMenu(false);
+  };
+
+  // Close and open mobile menu
+  const handleMobileMenu = () => {
+    setMobileMenu(!mobileMenu);
   };
 
   // checking if the user click outside of the
@@ -42,6 +53,38 @@ const Navbar = () => {
     };
   }, [expandUserMenuRef, expandMenu]);
 
+  const handleMouseEnter = () => {
+    setExpandMenu(true);
+  };
+
+  const handleMouseLeave = () => {
+    setExpandMenu(false);
+  };
+
+  useEffect(() => {
+    if (mobileMenu) {
+      setExpandMenu(true);
+    } else {
+      setExpandMenu(false);
+    }
+  }, [mobileMenu]);
+
+  // checking if the user click outside of the
+  useEffect(() => {
+    function handleClickOutSide(event) {
+      if (
+        expandUserWithMobileMenuRef.current &&
+        !expandUserWithMobileMenuRef.current.contains(event.target)
+      ) {
+        setMobileMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutSide);
+    };
+  }, [expandUserWithMobileMenuRef, mobileMenu]);
+
   return (
     <div className={styles.ParentNavbarWrapper}>
       <div className="container">
@@ -54,9 +97,9 @@ const Navbar = () => {
             </div>
             <ul className={styles.menus}>
               <li className={styles.menuList}>
-                <a className={styles.navLink} href="">
+                <Link to={"/"} className={styles.navLink}>
                   Finds Job
-                </a>
+                </Link>
               </li>
               <li className={styles.menuList}>
                 <a className={styles.navLink} href="">
@@ -65,11 +108,30 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <div className={styles.navbarBtnWrapper}>
-            {_id ? (
+
+          <span ref={expandUserWithMobileMenuRef}>
+            {!mobileMenu ? (
+              <HiMiniBars3BottomLeft
+                className={styles.mobileMenuBar}
+                onClick={handleMobileMenu}
+              />
+            ) : (
+              <GrClose
+                className={styles.mobileMenuBar}
+                onClick={handleMobileMenu}
+              />
+            )}
+          </span>
+
+          <div
+            className={`${styles.navbarMenuWrapper} ${
+              mobileMenu && styles.activeMobileMenu
+            }`}
+          >
+            {user?._id ? (
               <>
                 {user?.role === "employeer" && (
-                  <>
+                  <div className={styles.desktopExtraNavbarItem}>
                     <div className={styles.NavbarMenItem}>
                       <Link
                         to={"/employeer/dashboard"}
@@ -85,7 +147,7 @@ const Navbar = () => {
                         <span>Post Internship/Job</span>
                       </Link>
                     </div>
-                  </>
+                  </div>
                 )}
 
                 {user?.role === "jobSeeker" && (
@@ -102,8 +164,14 @@ const Navbar = () => {
                   </>
                 )}
 
-                <MessageIcon />
-                <div className={styles.avatarWrapper}>
+                <span className={styles.MessageIconWrapper}>
+                  <MessageIcon />
+                </span>
+                <div
+                  className={styles.avatarWrapper}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
                   {user?.avatar ? (
                     <img
                       className={styles.avatar}
@@ -112,10 +180,7 @@ const Navbar = () => {
                       onClick={() => setExpandMenu(!expandMenu)}
                     />
                   ) : (
-                    <button
-                      className={styles.headerAvatar}
-                      onClick={() => setExpandMenu(!expandMenu)}
-                    >
+                    <button className={styles.headerAvatar}>
                       {user?.userName?.slice(0, 1)}
                     </button>
                   )}
@@ -150,17 +215,6 @@ const Navbar = () => {
                           <>
                             <div className={styles.menuItem}>
                               <Link
-                                to={"/student/dashboard"}
-                                className={styles.menuLink}
-                                onClick={() => handleCloseExpandMenu()}
-                              >
-                                {/* <SupportIcon /> */}
-                                <span>Profile</span>
-                              </Link>
-                            </div>
-
-                            <div className={styles.menuItem}>
-                              <Link
                                 to={"/my-applciation"}
                                 className={styles.menuLink}
                                 onClick={() => handleCloseExpandMenu()}
@@ -178,6 +232,26 @@ const Navbar = () => {
                               >
                                 {/* <SupportIcon /> */}
                                 <span>Saved jobs</span>
+                              </Link>
+                            </div>
+                            <div className={styles.menuItem}>
+                              <Link
+                                to={"/student/resume"}
+                                className={styles.menuLink}
+                                onClick={() => handleCloseExpandMenu()}
+                              >
+                                {/* <SupportIcon /> */}
+                                <span>Edit Resume</span>
+                              </Link>
+                            </div>
+                            <div className={styles.menuItem}>
+                              <Link
+                                to={"/preference"}
+                                className={styles.menuLink}
+                                onClick={() => handleCloseExpandMenu()}
+                              >
+                                {/* <SupportIcon /> */}
+                                <span>Edit Preference</span>
                               </Link>
                             </div>
                           </>
@@ -214,6 +288,17 @@ const Navbar = () => {
                               >
                                 {/* <SupportIcon /> */}
                                 <span>Job listing</span>
+                              </Link>
+                            </div>
+
+                            <div className={styles.menuItem}>
+                              <Link
+                                to={"/employeer/all-applications"}
+                                className={styles.menuLink}
+                                onClick={() => handleCloseExpandMenu()}
+                              >
+                                {/* <SupportIcon /> */}
+                                <span>All applications</span>
                               </Link>
                             </div>
                           </>

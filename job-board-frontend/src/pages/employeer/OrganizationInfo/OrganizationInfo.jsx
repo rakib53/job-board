@@ -65,6 +65,14 @@ export default function OrganizationInfo() {
     }
   }, [user]);
 
+  if (isLoading) {
+    return (
+      <div className="initialLoadingWrapper">
+        <div className="contentLoader"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <div className={styles.InputFormWrapper}>

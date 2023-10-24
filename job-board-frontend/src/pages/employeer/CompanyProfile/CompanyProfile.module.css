@@ -13,11 +13,15 @@
 
 .companyLogoWrapper {
   width: 150px;
+  height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
 }
 
 .companyLogo {
   width: 100%;
   object-fit: contain;
+  border: 1px solid #ddd;
 }
 
 .companyInfoHeader {
@@ -90,4 +94,23 @@
   line-height: 22px;
   font-family: var(--primary-font);
   margin-bottom: 20px;
+}
+
+.jobPositionHeader {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 0 25px;
+}
+
+.showAllJob {
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.jobListWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

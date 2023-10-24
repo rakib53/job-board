@@ -1,3 +1,7 @@
+.AllApplicationsWrapper {
+  margin-bottom: 50px;
+}
+
 .tableHeader {
   width: 100%;
   font-family: arial, sans-serif;
@@ -148,6 +152,7 @@ tr:nth-child(even) {
 
 .actionsWrapper > ul > li {
   padding: 10px 0;
+  transition: all 0.3s ease-in;
 }
 
 .actionsWrapper > ul > li > a {
@@ -159,6 +164,10 @@ tr:nth-child(even) {
   cursor: pointer;
   text-decoration: none;
   text-transform: capitalize;
+}
+
+.actionsWrapper > ul > li:hover {
+  background-color: #ddd;
 }
 
 .seeApplicationBtn {

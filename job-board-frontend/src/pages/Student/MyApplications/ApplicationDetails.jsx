@@ -109,19 +109,16 @@ export default function ApplicationDetails() {
                       <p className={styles.basicJobInfoTitle}>Salary</p>
                     </div>
                     <span className={styles.basicJobInfoValue}>
-                      {salary?.salaryRange?.from
-                        ? `${CustomizeSalary(
-                            salary?.selectedCurrency,
-                            salary?.salaryRange?.from
-                          )} - ${CustomizeSalary(
-                            salary?.selectedCurrency,
-                            salary?.salaryRange?.to
-                          )}`
-                        : CustomizeSalary(
-                            salary?.selectedCurrency,
-                            salary?.salaryRange?.to
-                          )}{" "}
-                      {` /${salary?.salaryFrequency.toLowerCase()}`}
+                      {salary?.salaryRange?.from &&
+                        salary?.salaryRange?.to &&
+                        `${
+                          formatUSD(salary?.salaryRange?.from) -
+                          formatUSD(salary?.salaryRange?.to)
+                        }`}
+
+                      {salary?.salaryRange?.from &&
+                        !salary?.salaryRange?.to &&
+                        `$ ${formatUSD(salary?.salaryRange?.from)}`}
                     </span>
                   </div>
                   <div className={styles.basicJobCard}>
@@ -130,7 +127,10 @@ export default function ApplicationDetails() {
                       <p className={styles.basicJobInfoTitle}>EXPERIENCE</p>
                     </div>
                     <span className={styles.basicJobInfoValue}>
-                      {experience}
+                      {experience?.experienceRange?.to !==
+                      experience?.experienceRange?.from
+                        ? `${experience?.experienceRange?.from} - ${experience?.experienceRange?.to} years`
+                        : `${experience?.experienceRange?.from} years`}
                     </span>
                   </div>
                   <div className={styles.basicJobCard}>

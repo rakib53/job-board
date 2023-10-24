@@ -1,4 +1,7 @@
 import React from "react";
+import { FaDribbble, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { ImFacebook } from "react-icons/im";
+import { PiInstagramLogo } from "react-icons/pi";
 import LOGO from "../../assets/logo/job.png";
 import styles from "./Footer.module.css";
 
@@ -39,7 +42,7 @@ export default function Footer() {
               </li>
               <li>
                 <a className={styles.linkItem} href="">
-                  Privary Policy
+                  Privacy Policy
                 </a>
               </li>
             </ul>
@@ -88,8 +91,16 @@ export default function Footer() {
         </div>
 
         <div className={styles.copyRightTextWrapper}>
-          <p>2023 &copy; JobHunty. All right reserved.</p>
-          <div className={styles.socialMediaLink}></div>
+          <p className={styles.copyrightText}>
+            2023 &copy; JobHunty. All right reserved.
+          </p>
+          <div className={styles.socialMediaLink}>
+            <ImFacebook className={styles.socialMediaIcon} />
+            <PiInstagramLogo className={styles.socialMediaIcon} />
+            <FaDribbble className={styles.socialMediaIcon} />
+            <FaLinkedinIn className={styles.socialMediaIcon} />
+            <FaTwitter className={styles.socialMediaIcon} />
+          </div>
         </div>
       </div>
     </div>

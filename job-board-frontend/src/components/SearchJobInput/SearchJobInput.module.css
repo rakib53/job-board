@@ -26,16 +26,48 @@
   border-bottom: 1px solid #ddd;
   background: transparent;
   font-family: "Poppins", sans-serif;
+  transition: all 0.2s ease-in;
+}
+
+.input:focus {
+  border-bottom: 1px solid var(--primary-color);
+  transition: all 0.2s ease-in;
 }
 
 .searchIcon {
   width: 20px;
 }
 
+.searchjobBtnWrapper button:hover {
+  background-color: var(--primary-hover);
+  transition: all 0.3s ease-in;
+}
+
 .popularSearch {
   display: block;
   margin-top: 15px;
-  color: #fff;
+  color: #333;
   font-display: 14px;
   font-family: "Poppins", sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .jobSearchInput {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .searchjobBtnWrapper button {
+    margin-top: 15px;
+  }
+
+  .searchjobBtnWrapper button {
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  .jobSearchInputWrapper {
+    width: 100%;
+  }
 }

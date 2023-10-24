@@ -5,31 +5,41 @@ import styles from "../PostJob.module.css";
 export default function JobType({ jobType, setJobType }) {
   return (
     <div className={styles.employeeTypeWrapper}>
-      <label htmlFor="employeeType">Job type*</label>
+      <label htmlFor="fullTimePartTime">Job type*</label>
       <div>
         <input
           type="radio"
-          name="employeeType"
           className="secondary-custom-checkbox"
-          id="InHouseJob"
-          value={"InHouseJob"}
-          checked={jobType?.jobType === "InHouseJob"}
-          onChange={(e) => setJobType({ ...jobType, jobType: e.target.value })}
-          onClick={() => setJobType({ ...jobType, error: false })}
+          id="partTime"
+          name="jobType"
+          value={"partTime"}
+          checked={jobType?.jobType === "partTime"}
+          onChange={(e) =>
+            setJobType({
+              ...jobType,
+              jobType: e.target.value,
+              error: false,
+            })
+          }
         />
-        <label htmlFor="InHouseJob">In-house</label>
-
+        <label htmlFor="partTime">Part time</label>
         <input
           type="radio"
+          name="jobType"
           className="secondary-custom-checkbox"
-          id="workFromHome"
-          name="employeeType"
-          value={"workFromHome"}
-          checked={jobType?.jobType === "workFromHome"}
-          onChange={(e) => setJobType({ ...jobType, jobType: e.target.value })}
-          onClick={() => setJobType({ ...jobType, error: false })}
+          id="fullTime"
+          value={"fullTime"}
+          checked={jobType?.jobType === "fullTime"}
+          onChange={(e) =>
+            setJobType({
+              ...jobType,
+              jobType: e.target.value,
+              error: false,
+            })
+          }
         />
-        <label htmlFor="workFromHome">Work from home</label>
+        <label htmlFor="fullTime">Full time</label>
+
         <div
           className={` ${styles.errorWrapper} ${
             jobType.error && styles.seeError

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ApplicantsIcon from "../../../components/SVG/ApplicantsIcon";
 import CloseCoverLetterIcon from "../../../components/SVG/CloseCoverLetterIcon";
+import { useViewedJobApplicationMutation } from "../../../features/jobApplications/jobApplicationsApi";
 import styles from "./Applicants.module.css";
 
 export default function Applicant({ applicant }) {
@@ -8,7 +9,9 @@ export default function Applicant({ applicant }) {
   const [seeCoverLetter, setSeeCoverLetter] = useState(false);
   const expandUserMenuRef = useRef(null);
   const expandCoverLetterRef = useRef(null);
-  const { userId, jobId } = applicant;
+  const { _id, userId, jobId } = applicant;
+
+  const [viewJobApplication] = useViewedJobApplicationMutation();
 
   // excute this function when click on more button
   const handleMoreOption = () => {
@@ -18,6 +21,7 @@ export default function Applicant({ applicant }) {
   // excute this function when click on see application
   const handleViewCoverLetter = () => {
     setSeeCoverLetter(!seeCoverLetter);
+    viewJobApplication({ applicationId: _id });
   };
 
   // checking if the user click outside of the
@@ -78,10 +82,10 @@ export default function Applicant({ applicant }) {
             <div className={styles.actionsWrapper}>
               <ul>
                 <li className={styles.menuItem}>
-                  <a href="">message</a>
+                  <a href="">Message</a>
                 </li>
                 <li className={styles.menuItem}>
-                  <a href="">names</a>
+                  <a href="">Delete</a>
                 </li>
               </ul>
             </div>

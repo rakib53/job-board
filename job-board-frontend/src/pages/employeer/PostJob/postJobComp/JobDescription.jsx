@@ -10,7 +10,7 @@ export default function JobDescription({ description, setDescription }) {
       <textarea
         className={styles.input}
         style={{ minHeight: "250px", resize: "none" }}
-        description={description}
+        value={description.description}
         onChange={(e) =>
           setDescription({ ...description, description: e.target.value })
         }

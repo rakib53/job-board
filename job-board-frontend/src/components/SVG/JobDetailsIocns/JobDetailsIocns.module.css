@@ -7,6 +7,6 @@
 
 .shareIcon:hover {
   cursor: pointer;
-  background-color: #e7e3e3;
+  background-color: #faf5f5;
   transition: all 0.4s linear;
 }

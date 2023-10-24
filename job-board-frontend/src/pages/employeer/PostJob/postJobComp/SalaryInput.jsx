@@ -14,9 +14,8 @@ export default function SalaryInput({ salary, setSalary }) {
           id="salary"
           value={salary.salaryAmount}
           onChange={(e) =>
-            setSalary({ ...salary, salaryAmount: e.target.value })
+            setSalary({ ...salary, salaryAmount: e.target.value, error: false })
           }
-          onClick={() => setSalary({ ...salary, error: false })}
           placeholder="e.g. 25000"
         />
       </div>
@@ -34,10 +33,13 @@ export default function SalaryInput({ salary, setSalary }) {
           onChange={(e) =>
             setSalary({
               ...salary,
-              salaryRange: { ...salary.salaryRange, from: e.target.value },
+              salaryRange: {
+                ...salary.salaryRange,
+                from: e.target.value,
+                error: false,
+              },
             })
           }
-          onClick={() => setSalary({ ...salary, error: false })}
           placeholder="e.g. 28000"
         />
         <span className={styles.to}>to</span>
@@ -50,10 +52,13 @@ export default function SalaryInput({ salary, setSalary }) {
           onChange={(e) =>
             setSalary({
               ...salary,
-              salaryRange: { ...salary.salaryRange, to: e.target.value },
+              salaryRange: {
+                ...salary.salaryRange,
+                to: e.target.value,
+                error: false,
+              },
             })
           }
-          onClick={() => setSalary({ ...salary, error: false })}
           placeholder="e.g. 30000"
         />
       </>

@@ -54,48 +54,78 @@ const additionalInformationSlice = createSlice({
   initialState,
   reducers: {
     getSelectedGender: (state, action) => {
-      state.selectedGender = action.payload;
+      if (action.payload) {
+        state.selectedGender = action.payload;
+      } else {
+        state.selectedGender = "";
+      }
     },
     getSelectedEmployeeType: (state, action) => {
-      state.selectedEmployeeTypes = action.payload;
+      if (action.payload) {
+        state.selectedEmployeeTypes = action.payload;
+      } else {
+        state.selectedEmployeeTypes = "";
+      }
     },
     getSelectedLanguage: (state, action) => {
-      if (state.selectedLanguages.includes(action.payload)) {
-        state.selectedLanguages = state.selectedLanguages.filter(
-          (item) => item !== action.payload
-        );
+      if (action.payload) {
+        if (state.selectedLanguages.includes(action.payload)) {
+          state.selectedLanguages = state.selectedLanguages.filter(
+            (item) => item !== action.payload
+          );
+        } else {
+          state.selectedLanguages = [
+            ...state.selectedLanguages,
+            action.payload,
+          ];
+        }
       } else {
-        state.selectedLanguages = [...state.selectedLanguages, action.payload];
+        state.selectedLanguages = [];
       }
     },
     getSelectedInterest: (state, action) => {
-      if (state.selectedInterests.includes(action.payload)) {
-        state.selectedInterests = state.selectedInterests.filter(
-          (item) => item !== action.payload
-        );
+      if (action.payload) {
+        if (state.selectedInterests.includes(action.payload)) {
+          state.selectedInterests = state.selectedInterests.filter(
+            (item) => item !== action.payload
+          );
+        } else {
+          state.selectedInterests = [
+            ...state.selectedInterests,
+            action.payload,
+          ];
+        }
       } else {
-        state.selectedInterests = [...state.selectedInterests, action.payload];
+        state.selectedInterests = [];
       }
     },
     getSelectedJobTypes: (state, action) => {
-      if (state.selectedJobTypes.includes(action.payload)) {
-        state.selectedJobTypes = state.selectedJobTypes.filter(
-          (item) => item !== action.payload
-        );
+      if (action.payload) {
+        if (state.selectedJobTypes.includes(action.payload)) {
+          state.selectedJobTypes = state.selectedJobTypes.filter(
+            (item) => item !== action.payload
+          );
+        } else {
+          state.selectedJobTypes = [...state.selectedJobTypes, action.payload];
+        }
       } else {
-        state.selectedJobTypes = [...state.selectedJobTypes, action.payload];
+        state.selectedJobTypes = [];
       }
     },
     getSelectedJobWhereFrom: (state, action) => {
-      if (state.selectedJobWhereFrom.includes(action.payload)) {
-        state.selectedJobWhereFrom = state.selectedJobWhereFrom.filter(
-          (item) => item !== action.payload
-        );
+      if (action.payload) {
+        if (state.selectedJobWhereFrom.includes(action.payload)) {
+          state.selectedJobWhereFrom = state.selectedJobWhereFrom.filter(
+            (item) => item !== action.payload
+          );
+        } else {
+          state.selectedJobWhereFrom = [
+            ...state.selectedJobWhereFrom,
+            action.payload,
+          ];
+        }
       } else {
-        state.selectedJobWhereFrom = [
-          ...state.selectedJobWhereFrom,
-          action.payload,
-        ];
+        state.selectedJobWhereFrom = [];
       }
     },
   },

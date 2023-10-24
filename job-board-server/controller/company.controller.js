@@ -1,4 +1,4 @@
-const User = require("../model/users.model");
+const { User, Employer } = require("../model/users.model");
 const CompanyModel = require("../model/company.model");
 
 // Login  User.
@@ -34,15 +34,21 @@ const addCompany = async (req, res, next) => {
         const newCompany = await new CompanyModel(company);
         // Saving the company information to database
         const savedCompany = await newCompany.save();
+
         if (savedCompany?._id) {
-          const updatedUserCompanyId = await User.updateOne(
+          const updatedUserCompanyId = await Employer.updateOne(
             { _id: userId },
-            { companyId: savedCompany?._id, accountCompeletation: 100 }
+            { companyId: savedCompany?._id, accountCompeletation: 100 },
+            {
+              upsert: true,
+              new: true,
+            }
           );
           if (updatedUserCompanyId?.acknowledged) {
-            return res
-              .status(201)
-              .json({ message: "Company Added Successfully!" });
+            return res.status(201).json({
+              companyInfo: savedCompany,
+              message: "Company Added Successfully!",
+            });
           }
         }
       } else {

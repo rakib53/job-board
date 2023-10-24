@@ -3,6 +3,7 @@
   justify-content: space-between;
   padding: 15px;
   border: 1px solid #ddd;
+  background-color: #fff;
 }
 
 .companyLogoWrapper {
@@ -86,4 +87,26 @@
   margin-top: 5px;
   font-size: 13px;
   font-family: var(--primary-font);
+}
+
+@media screen and (max-width: 550px) {
+  .JobInfoWrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .CompanyImageAndJobInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .OtherInfoWrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .otherInfo {
+    flex-direction: column;
+  }
 }

@@ -1,4 +1,4 @@
-const User = require("../model/users.model");
+const { User, JobSeeker, Employer } = require("../model/users.model");
 const jwt = require("jsonwebtoken");
 
 //
@@ -27,7 +27,7 @@ const signJsonWebToken = (req, res, next) => {
       data: user,
     },
     process.env.JWT_SECRET,
-    { expiresIn: isRememberValue ? isRememberValue : "1h" }
+    { expiresIn: isRememberValue ? isRememberValue : "15d" }
   );
 
   if (siginInToken.length > 0) {
@@ -39,9 +39,7 @@ const signJsonWebToken = (req, res, next) => {
   }
 };
 
-//
 // Verifing JSON web token.
-//
 const verifyJsonWebToken = (req, res, next) => {
   try {
     console.log("Verifing user data");
@@ -64,9 +62,7 @@ const verifyJsonWebToken = (req, res, next) => {
   }
 };
 
-//
 // Creating a new User.
-//
 const registration = async (req, res, next) => {
   try {
     const token = req?.token;
@@ -94,29 +90,54 @@ const registration = async (req, res, next) => {
     };
 
     // User finding from the database
-    const isUser = await User.find({ email });
+    const isUser = await User.findOne({ email });
+
     // Checkng if the user already exist
-    if (isUser.length > 0) {
-      res.status(301).json({ status: 301, message: "This email alredy exist" });
+    if (isUser?.email) {
+      res
+        .status(301)
+        .json({ status: 301, message: "This email alredy exist!" });
       return;
     }
 
-    // Creating the user object for database
-    const newUser = await new User(user);
-    // Saving the user information to database
-    const registerdUser = await newUser.save();
-    // Removing the password field from the user object before sending the response
-    const { password: _, __v: __v, ...userInfo } = registerdUser._doc;
+    if (role === "employeer") {
+      // Creating the user object for database
+      const newUser = await new Employer(user);
+      // Saving the user information to database
+      const registerdUser = await newUser.save();
 
-    // Storing the user information to database and gives front end response
-    if (registerdUser?._id) {
-      res.status(201).json({
-        token: token,
-        user: userInfo,
-        message: "User created successfully",
-      });
-    } else {
-      res.status(500).json({ message: "Failed to create user" });
+      // Removing the password field from the user object before sending the response
+      const { password: _, __v: __v, ...userInfo } = registerdUser._doc;
+
+      // Sending response to the client
+      if (registerdUser?._id) {
+        return res.status(200).json({
+          token: token,
+          user: userInfo,
+          message: "Employeer Account created successfully",
+        });
+      } else {
+        return res.status(500).json({ message: "Failed to create user" });
+      }
+    } else if (role === "jobSeeker") {
+      // Creating the user object for database
+      const newUser = await new JobSeeker(user);
+      // Saving the user information to database
+      const registerdUser = await newUser.save();
+
+      // Removing the password field from the user object before sending the response
+      const { password: _, __v: __v, ...userInfo } = registerdUser._doc;
+
+      // Storing the user information to database and gives front end response
+      if (registerdUser?._id) {
+        return res.status(200).json({
+          token: token,
+          user: userInfo,
+          message: "User created successfully",
+        });
+      } else {
+        return res.status(500).json({ message: "Failed to create user" });
+      }
     }
   } catch (error) {
     next(error);
@@ -140,12 +161,12 @@ const loginUser = async (req, res, next) => {
 
     // If the user not exist send back to this response to client
     if (!isUser) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "Invalid email or password!" });
     }
 
     // If the user passwod dosent match send back to this response to client
     if (isUser?.password !== password) {
-      return res.status(401).json({ error: "Passwod dosen't macth" });
+      return res.status(401).json({ error: "Password dosen't macth!" });
     }
 
     // Removing the password field from the user object before sending the response
@@ -173,6 +194,7 @@ const updateUserData = async (req, res, next) => {
     const query = { email: email };
 
     const {
+      userRole,
       userName,
       contactNumber,
       location,
@@ -232,20 +254,30 @@ const updateUserData = async (req, res, next) => {
       updatedData.accountCompeletation = 100;
     }
 
-    // Checkng if the user already exist and updating the data
-    const isUser = await User.findOneAndUpdate(query, updatedData, {
-      upsert: true,
-      new: true,
-    });
-
-    // Removing the password field from the user object before sending the response
-    const { password: _, __v: __v, ...userInfo } = isUser?._doc;
+    let updatedUser;
+    if (userRole === "employeer") {
+      // Checkng if the user already exist and updating the data
+      updatedUser = await User.findOneAndUpdate(query, updatedData, {
+        upsert: true,
+        new: true,
+      });
+    } else if (userRole === "jobSeeker") {
+      // Checkng if the user already exist and updating the data
+      updatedUser = await JobSeeker.findOneAndUpdate(
+        query,
+        {
+          $set: updatedData,
+        },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    }
 
     // If User exist that means the data has changed
-    if (isUser?._id) {
-      return res
-        .status(201)
-        .send({ user: userInfo, message: "Updated your data!" });
+    if (updatedUser?._id) {
+      return res.status(201).send({ message: "Updated your data!" });
     } else {
       return res.status(401).send({ message: "user not valid!" });
     }
@@ -254,12 +286,243 @@ const updateUserData = async (req, res, next) => {
   }
 };
 
-//
+// Adding the the Job sekeer resume data
+const updateJobSekeerResume = async (req, res, next) => {
+  try {
+    const {
+      userId,
+      updateObj,
+      job,
+      traningCourse,
+      personalProject,
+      skill,
+      education,
+      socialLinks,
+      additionalDetails,
+    } = req?.body;
+
+    const newEducation = {
+      title: education?.title,
+      degree: education?.degree,
+      datesAttended: {
+        startDate: education?.datesAttended?.startDate,
+        endDate: education?.datesAttended?.endDate,
+      },
+      subject: education?.subject,
+      description: education?.description,
+    };
+
+    let result;
+
+    if (updateObj === "education") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $push: { "resume.education": newEducation } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    } else if (updateObj === "job") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $push: { "resume.job": job } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    } else if (updateObj === "traningCourse") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $push: { "resume.traningCourse": traningCourse } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    } else if (updateObj === "personalProject") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $push: { "resume.personalProject": personalProject } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    } else if (updateObj === "skill") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $push: { "resume.skill": skill } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    } else if (updateObj === "socialLinks") {
+      const newSocialLinksData = {
+        "resume.socialLinks": {
+          blogLink: socialLinks?.blogLink,
+          githubLink: socialLinks?.githubLink,
+          playStore: socialLinks?.playStore,
+          behanceLink: socialLinks?.behanceLink,
+          otherLink: socialLinks?.otherLink,
+        },
+      };
+
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $set: newSocialLinksData },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    } else if (updateObj === "additionalDetails") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $push: { "resume.additionalDetails": additionalDetails } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+    }
+
+    if (result?._id) {
+      return res.status(201).send({ message: "Success!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Delete the Job sekeer resume data
+const deleteJobSekeerResumeInfo = async (req, res, next) => {
+  try {
+    const { infoId, infoType, userId, dynamicPropertyName } = req?.body;
+
+    let result;
+    if (infoType === "socialLinks") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $set: { [`resume.socialLinks.${dynamicPropertyName}`]: "" } },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+      if (result?._id) {
+        return res.status(200).send({ message: "Success!" });
+      }
+    }
+
+    result = await JobSeeker.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { [`resume.${infoType}`]: { _id: infoId } } },
+      { new: true }
+    );
+
+    if (result?._id) {
+      return res.status(200).send({ message: "Success!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// edit the job sekeer resume data
+const editResumeInfo = async (req, res, next) => {
+  try {
+    const {
+      userId,
+      updateObj,
+      job,
+      traningCourse,
+      personalProject,
+      skill,
+      education,
+      socialLinks,
+      additionalDetails,
+      resumeInfoId,
+    } = req?.body;
+
+    let result;
+
+    if (updateObj === "education") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId, "resume.education._id": resumeInfoId },
+        { $set: { "resume.education.$": education } },
+        {
+          new: true,
+        }
+      );
+    } else if (updateObj === "job") {
+      console.log("setting up job");
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId, "resume.job._id": resumeInfoId },
+        { $set: { "resume.job.$": job } },
+        {
+          new: true,
+        }
+      );
+    } else if (updateObj === "traningCourse") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId, "resume.traningCourse._id": resumeInfoId },
+        { $set: { "resume.traningCourse.$": traningCourse } },
+        {
+          new: true,
+        }
+      );
+    } else if (updateObj === "personalProject") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId, "resume.personalProject._id": resumeInfoId },
+        { $set: { "resume.personalProject.$": personalProject } },
+        {
+          new: true,
+        }
+      );
+    } else if (updateObj === "skill") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId, "resume.skill._id": resumeInfoId },
+        { $set: { "resume.skill.$": skill } },
+        {
+          new: true,
+        }
+      );
+    } else if (updateObj === "socialLinks") {
+      const { link } = req?.body;
+
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId },
+        { $set: { [`resume.socialLinks.${resumeInfoId}`]: link } },
+        {
+          new: true,
+          upsert: true,
+        }
+      );
+    } else if (updateObj === "additionalDetails") {
+      result = await JobSeeker.findOneAndUpdate(
+        { _id: userId, "resume.additionalDetails._id": resumeInfoId },
+        { $set: { "resume.additionalDetails.$": additionalDetails } },
+        {
+          new: true,
+        }
+      );
+    }
+
+    if (result?._id) {
+      console.log("result");
+      return res.status(200).json({ message: "Success!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Checking The user is valid or not
-//
 const userInfo = async (req, res, next) => {
   try {
-    console.log("hittted user info routes");
     // user email
     const { email } = req.decoded;
     // Define your search criteria
@@ -287,4 +550,7 @@ module.exports = {
   loginUser,
   updateUserData,
   userInfo,
+  updateJobSekeerResume,
+  editResumeInfo,
+  deleteJobSekeerResumeInfo,
 };

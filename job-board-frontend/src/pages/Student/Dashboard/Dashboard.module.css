@@ -12,3 +12,12 @@
   width: 30px;
   height: 30px;
 }
+
+.studentInfo {
+  display: flex;
+  justify-content: center;
+}
+
+.StudentDashboard {
+  padding-bottom: 450px;
+}

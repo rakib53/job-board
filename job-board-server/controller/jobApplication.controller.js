@@ -1,4 +1,5 @@
 const jobApplication = require("../model/jobApplication.model");
+const Jobs = require("../model/job.model");
 
 // Creating a new Job Applcation (Student Route)
 const postJobApplication = async (req, res, next) => {
@@ -11,6 +12,7 @@ const postJobApplication = async (req, res, next) => {
       companyId,
       coverLetter,
       jobTerms,
+      viewApplication: false,
     };
 
     if (jobId) {
@@ -26,6 +28,12 @@ const postJobApplication = async (req, res, next) => {
           res
             .status(201)
             .json({ status: 201, message: "Successfully applied" });
+          // After successfuly job applied then the job application will increase
+          const jobDetils = await Jobs.findOne({ _id: jobId });
+          await Jobs.findOneAndUpdate(
+            { _id: jobId },
+            { $set: { applicants: jobDetils?.applicants + 1 } }
+          );
         } else {
           res.status(301).json({
             status: 301,
@@ -98,12 +106,10 @@ const getApplication = async (req, res, next) => {
   }
 };
 
-// get all the applicants (Employeer Route)
+// get all the applicants for a single job (Employeer Route)
 const getApplicants = async (req, res, next) => {
   try {
     const { jobId } = req?.params;
-
-    console.log(jobId);
 
     if (jobId) {
       const query = { jobId: jobId };
@@ -123,9 +129,63 @@ const getApplicants = async (req, res, next) => {
   }
 };
 
+const getAllApplications = async (req, res, next) => {
+  try {
+    const { companyId } = req?.params;
+    const getApplications = await jobApplication
+      .find({
+        companyId,
+      })
+      .populate("userId")
+      .populate("jobId");
+    res.status(200).json({ applications: getApplications });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// get all the applicants for a single job (Employeer Route)
+const getAllJobsApplication = async (req, res, next) => {
+  try {
+    const { companyId } = req.params;
+
+    const alljobApplications = await jobApplication
+      .find({ companyId })
+      .populate("userId")
+      .populate("jobId");
+
+    res.status(201).json({
+      status: 201,
+      applications: alljobApplications,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// view applications (Empoloyeer Route)
+const viewedJobApplication = async (req, res, next) => {
+  try {
+    const { applicationId } = req?.params;
+
+    const applicationViewd = await jobApplication.findOneAndUpdate(
+      { _id: applicationId },
+      { $set: { viewApplication: true } }
+    );
+    if (applicationViewd?._id) {
+      res.status(200).json({ message: "Success!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   postJobApplication,
+  getAllJobsApplication,
   getUserApplicaions,
   getApplication,
   getApplicants,
+  getAllApplications,
+  viewedJobApplication,
 };

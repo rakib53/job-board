@@ -19,13 +19,68 @@
 .signUpLeft {
   width: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background-color: #15ae81;
+  background-image: url("../../assets/signin_images/bg.png");
 }
 
-.leftImage {
-  max-width: 500px;
-  width: 100%;
+.signUpInner {
+  width: 365px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.QuatationImage {
+  position: absolute;
+  top: -100px;
+  left: -35px;
+  width: 70px;
+  height: auto;
+}
+
+.signUpInner::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 1px;
+  height: 95%;
+  opacity: 0.5;
+  background: #fff;
+}
+
+.signUpInner::before {
+  content: "";
+  position: absolute;
+  top: 57%;
+  left: 0;
+  width: 100px;
+  height: 1px;
+  opacity: 0.5;
+  background: #fff;
+}
+
+.findYourJobTitle {
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 65px;
+  color: #fff;
+  margin-bottom: 70px;
+}
+
+.browseJobText {
+  width: 240px;
+  color: #fff;
+  align-self: flex-end;
+  margin-bottom: 60px;
+}
+
+.leftLogo {
+  width: 174px;
+  align-self: center;
 }
 
 .formWrapper {
@@ -84,17 +139,26 @@
   width: 50%;
   background: #fbfbfb;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+.signUpformWrapper {
+  max-width: 500px;
+  width: 100%;
 }
 
 .signUpText {
   color: var(--base-black);
   font-size: 36px;
-  line-height: 60px;
-  margin-bottom: 50px;
-  margin-top: 100px;
+  line-height: 40px;
+  margin-bottom: 10px;
   font-family: "Poppins", sans-serif;
+}
+
+.signUpSologan {
+  color: #92929d;
+  margin-bottom: 30px;
 }
 
 .socilSignIn {
@@ -145,8 +209,17 @@
 }
 
 .cerateAccountBtnWrapper button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   width: 100%;
   border-radius: 5px;
+}
+
+.buttonLoading {
+  width: 18px;
+  height: 18px;
 }
 
 .orWrapper {
@@ -234,6 +307,12 @@
   border: 1px solid var(--border-color);
 }
 
+.signUpLink {
+  text-decoration: none;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
 .inputGroup {
   display: flex;
   gap: 10px;
@@ -256,6 +335,15 @@ label {
   font-family: "Poppins", sans-serif;
 }
 
+.labelAndErrorWrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.labelAndErrorWrapper span {
+  margin-bottom: 6px;
+}
 /* Error message */
 
 .errorWrapper {
@@ -282,6 +370,10 @@ label {
   font-size: 15px;
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease-in;
+}
+
+.inputError {
+  border: 1px solid red;
 }
 
 .input:focus {
@@ -345,4 +437,19 @@ label {
 .nextBtnWrapper button:hover {
   background-color: var(--primary-hover);
   transition: all 0.4s ease;
+}
+
+@media screen and (max-width: 1024px) {
+  .signUpPageContent {
+    flex-direction: column;
+  }
+
+  .signUpLeft {
+    display: none;
+  }
+
+  .signUpRightContent {
+    width: 100%;
+    padding: 30px;
+  }
 }

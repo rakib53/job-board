@@ -5,7 +5,6 @@ import styles from "./JobCard.module.css";
 
 // Formating the salary
 function formatUSD(number, digits) {
-  console.log(number);
   // Convert the number to a string
   const numStr = number.toString();
 
@@ -27,25 +26,9 @@ function formatUSD(number, digits) {
   return formattedNumber;
 }
 
-// Customize the salay in visulizatio
-const CustomizeSalary = (currenciesType, salary) => {
-  let currencySymbol = null;
-
-  if (currenciesType === "USD") {
-    currencySymbol = "$";
-  } else if (currenciesType === "EURO") {
-    currencySymbol = "€";
-  } else if (currenciesType === "BDT") {
-    currencySymbol = "৳";
-  } else if (currenciesType === "INR") {
-    currencySymbol = "₹";
-  }
-
-  return currencySymbol + " " + formatUSD(salary);
-};
-
-export default function JobCard({ jobInfo = {} }) {
+export default function JobCard({ jobInfo = {}, handleJobApply }) {
   const { _id, jobId, salary, jobTitle, experience, company } = jobInfo;
+
   return (
     <div className={styles.JobInfoWrapper}>
       <div className={styles.CompanyImageAndJobInfo}>
@@ -75,19 +58,15 @@ export default function JobCard({ jobInfo = {} }) {
                 <span>CTC (ANNUAL)</span>
               </p>
               <span className={styles.infoValue}>
-                {salary?.salaryRange?.from
-                  ? `${CustomizeSalary(
-                      salary?.selectedCurrency,
-                      salary?.salaryRange?.from
-                    )} - ${CustomizeSalary(
-                      salary?.selectedCurrency,
-                      salary?.salaryRange?.to
-                    )}`
-                  : CustomizeSalary(
-                      salary?.selectedCurrency,
-                      salary?.salaryRange?.to
-                    )}
-                {` /${salary?.salaryFrequency.toLowerCase()}`}
+                {salary?.salaryRange?.from &&
+                  salary?.salaryRange?.to &&
+                  `$ ${formatUSD(salary?.salaryRange?.from)} - ${formatUSD(
+                    salary?.salaryRange?.to
+                  )}`}
+
+                {salary?.salaryRange?.from &&
+                  !salary?.salaryRange?.to &&
+                  `$ ${formatUSD(salary?.salaryRange?.from)}`}
               </span>
             </div>
             <div className={styles.OtherInfoWrapper}>
@@ -105,16 +84,21 @@ export default function JobCard({ jobInfo = {} }) {
                 </span>
                 <span>EXPERIENCE</span>
               </p>
-              <span className={styles.infoValue}>{experience}</span>
+              <span className={styles.infoValue}>
+                {experience?.experienceRange?.to !==
+                experience?.experienceRange?.from
+                  ? `${experience?.experienceRange?.from} - ${experience?.experienceRange?.to} years`
+                  : `${experience?.experienceRange?.from} years`}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <div className={styles.applyBtnWrapper}>
-        <Link to={`/applciation/form/${jobId}`} className="primaryBtn">
+        <button onClick={() => handleJobApply(jobId)} className="primaryBtn">
           Apply
-        </Link>
+        </button>
         <Link to={`/job/${jobId}`} className="primaryBtn">
           See details
         </Link>

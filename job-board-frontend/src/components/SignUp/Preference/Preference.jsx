@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  getSelectedInterest,
+  getSelectedJobTypes,
+  getSelectedJobWhereFrom,
+} from "../../../features/additionalInformation/additionalInformationSlice";
 import { useUpdateUserDataMutation } from "../../../features/auth/authApi";
-import { getUserInfo } from "../../../features/auth/authSlice";
 import ErrorIcon from "../../SVG/ErrorIcon";
 import AccountProgressBar from "../AccountProgressBar/AccountProgressBar";
 import styles from "../SignUp.module.css";
@@ -33,7 +37,7 @@ export default function Preference() {
     event.preventDefault();
 
     const userData = {
-      _id: user?._id,
+      userRole: user?.role,
       interestArea: selectedInterests,
       jobTypes: selectedJobTypes,
       jobWhereFrom: selectedJobWhereFrom,
@@ -51,13 +55,17 @@ export default function Preference() {
       setError({ ...error, workModeError: true });
       return;
     }
+
     updateUserData(userData);
   };
 
   // If Successfully send data to server
   useEffect(() => {
     if (isSuccess) {
-      dispatch(getUserInfo(updateUserResponse?.user));
+      dispatch(getSelectedInterest());
+      dispatch(getSelectedJobTypes());
+      dispatch(getSelectedJobWhereFrom());
+      navigate("/student/dashboard");
     }
   }, [updateUserResponse?.user, isSuccess]);
 

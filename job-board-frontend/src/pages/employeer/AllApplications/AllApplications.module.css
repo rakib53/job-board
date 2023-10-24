@@ -1,0 +1,185 @@
+.AllApplicationsWrapper {
+  margin-bottom: 50px;
+}
+
+.tableHeader {
+  width: 100%;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+}
+
+.jobApplicantsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0 20px;
+}
+
+.totalApplicantsCount {
+  font-weight: 600;
+  font-size: 24px;
+  font-family: var(--primary-font);
+}
+
+.searchApplicantsInput {
+  max-width: 350px;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px 20px;
+  outline: none;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.searchApplicantsInput:focus {
+  border: 1px solid var(--primary-color);
+}
+
+.searchApplicantsInput::placeholder {
+  font-size: 14px;
+  font-family: var(--primary-font);
+}
+
+th {
+  font-weight: 500;
+  color: #3e3e3ec7;
+  padding: 10px;
+  font-family: var(--primary-font);
+}
+
+tr {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  font-family: var(--primary-font);
+}
+
+td {
+  text-align: center;
+  padding: 8px;
+  font-family: var(--primary-font);
+}
+
+tr:nth-child(even) {
+  background-color: rgb(179 179 255 / 12%);
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--primary-font);
+}
+
+.SeeMoreBtn {
+  position: relative;
+  display: block;
+}
+
+.actionsWrapper {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  border: 1px solid var(--gray-50, #f0f1f3);
+  background: var(--base-white, #fff);
+  box-shadow: 0px 8px 8px -4px rgba(18, 65, 160, 0.03),
+    0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+  z-index: 10000;
+  animation: fadeIn 0.5s;
+}
+
+.modalCoverLetter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 750px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 30px;
+  border: 1px solid var(--gray-50, #f0f1f3);
+  background: var(--base-white, #fff);
+  box-shadow: 0px 8px 8px -4px rgba(18, 65, 160, 0.03),
+    0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+  z-index: 10000;
+  animation: fadeIn 0.5s;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.coverLetteruserName {
+  margin-bottom: 5px;
+}
+
+.coverLetterJobRole {
+  margin-bottom: 5px;
+}
+
+.coverLetterText {
+  font-size: 15px;
+  line-height: 22px;
+  white-space: pre-line !important;
+  font-family: "Inter", sans-serif;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.actionWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.actionsWrapper > ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.actionsWrapper > ul > li {
+  padding: 10px 0;
+}
+
+.actionsWrapper > ul > li > a {
+  color: var(--gray-900, #2b2f38);
+  font-family: var(--primary-font);
+  font-size: 14px;
+  line-height: 20px;
+  padding: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.seeApplicationBtn {
+  outline: none;
+  padding: 8px;
+  text-decoration: none;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  background-color: rgba(17, 17, 221, 0.13);
+}
+
+.seeApplicationBtn:hover {
+  cursor: pointer;
+}
+
+.noApplicationFoundWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}

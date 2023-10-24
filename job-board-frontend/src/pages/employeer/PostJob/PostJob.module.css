@@ -124,3 +124,10 @@ input[type="date"],
   text-transform: capitalize;
   font-family: var(--primary-font);
 }
+
+/* Experience css start here  */
+
+.experienceBetweenField {
+  display: flex;
+  gap: 20px;
+}

@@ -1,7 +1,6 @@
-const User = require("../model/users.model");
+const { User, Employer } = require("../model/users.model");
 const Jobs = require("../model/job.model");
 const saveJob = require("../model/savedJob.model");
-const mongoose = require("mongoose");
 
 // Formating the salary
 function formatUSD(number, digits) {
@@ -25,7 +24,11 @@ function formatUSD(number, digits) {
 
   return formattedNumber;
 }
-
+// making custom JobID
+const JobId = (jobTitle) => {
+  const underscoreJobTitle = jobTitle.split(" ").join("-");
+  return `${underscoreJobTitle}-${Date.now()}`;
+};
 // Customize the salay in visulization
 const CustomizeSalary = (currenciesType, salary) => {
   let currencySymbol = null;
@@ -59,23 +62,13 @@ const probationCustomize = (probation) => {
   }
   return probationObj;
 };
-// Customizint the job title
-const JobId = (jobTitle) => {
-  const trimedJobTitle = jobTitle.trim();
-  const jobTitleAsURL = trimedJobTitle.split(" ").join("-");
-  console.log(jobTitleAsURL);
-  return jobTitleAsURL + "-" + Date.now();
-};
 
 // create Job Post (Empoloyeer Route).
 const createJob = async (req, res, next) => {
   try {
-    console.log("Hitting The Create job post route!");
     const {
       userId,
       companyId,
-      companyName,
-      companyLocation,
       probation,
       jobTitle,
       experience,
@@ -83,20 +76,20 @@ const createJob = async (req, res, next) => {
       joinDate,
       applyEndDate,
       jobType,
+      workLocation,
       numberOfOpen,
       description,
     } = req?.body;
 
     if (
       companyId &&
-      companyName &&
-      companyLocation &&
       jobTitle &&
       experience &&
       salary &&
       joinDate &&
       applyEndDate &&
       jobType &&
+      workLocation &&
       numberOfOpen &&
       description
     ) {
@@ -108,22 +101,35 @@ const createJob = async (req, res, next) => {
         joinDate,
         applyEndDate,
         jobType,
-        numberOfOpen,
+        workLocation,
+        numberOfOpen: parseInt(numberOfOpen),
         description,
         probation: probationCustomize(probation),
         salary,
         timeStamp: Date.now(),
       };
 
+      if (salary?.salaryRange?.from && salary?.salaryRange?.to) {
+        newJobObj.salary = {
+          salaryRange: {
+            from: parseInt(salary?.salaryRange?.from),
+            to: parseInt(salary?.salaryRange?.to),
+          },
+        };
+      } else if (salary?.salaryRange?.from && !salary?.salaryRange?.to) {
+        newJobObj.salary = {
+          salaryRange: {
+            from: parseInt(salary?.salaryRange?.from),
+          },
+        };
+      }
+
       const query = { _id: userId };
       // Checkng if the user exist
       const isUser = await User.findOne(query);
-      // Checking if the user Id and the company ID is same
 
-      if (
-        isUser?._id.toString() === userId &&
-        isUser?.companyId === companyId
-      ) {
+      // Checking if the user Id and the company ID is same
+      if (isUser?._id.toString() === userId) {
         const createdNewJob = await new Jobs(newJobObj);
         const newJobPosted = await createdNewJob.save();
         if (newJobPosted?._id) {
@@ -131,6 +137,83 @@ const createJob = async (req, res, next) => {
             .status(200)
             .json({ job: newJobPosted, message: "Job added successfully!" });
         }
+      }
+    } else {
+      return res.status(401).json({ error: "Somethings went wrong!" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// edit Job Post (Empoloyeer Route).
+const editJob = async (req, res, next) => {
+  try {
+    const { jobId } = req?.params;
+    const {
+      companyId,
+      probation,
+      jobTitle,
+      experience,
+      salary,
+      joinDate,
+      applyEndDate,
+      jobType,
+      workLocation,
+      numberOfOpen,
+      description,
+    } = req?.body;
+
+    if (
+      companyId &&
+      jobTitle &&
+      experience &&
+      salary &&
+      joinDate &&
+      applyEndDate &&
+      jobType &&
+      workLocation &&
+      numberOfOpen &&
+      description
+    ) {
+      const updatedJob = {
+        jobId: jobId,
+        company: companyId,
+        jobTitle,
+        experience,
+        joinDate,
+        applyEndDate,
+        jobType,
+        workLocation,
+        numberOfOpen: parseInt(numberOfOpen),
+        description,
+        probation: probationCustomize(probation),
+        salary,
+      };
+
+      if (salary?.salaryRange?.from && salary?.salaryRange?.to) {
+        updatedJob.salary = {
+          salaryRange: {
+            from: parseInt(salary?.salaryRange?.from),
+            to: parseInt(salary?.salaryRange?.to),
+          },
+        };
+      } else if (salary?.salaryRange?.from && !salary?.salaryRange?.to) {
+        updatedJob.salary = {
+          salaryRange: {
+            from: parseInt(salary?.salaryRange?.from),
+          },
+        };
+      }
+      const query = { jobId: jobId };
+      // Checkng if the user exist
+      const isUser = await Jobs.findOneAndUpdate(query, updatedJob);
+
+      // Checking if the user Id and the company ID is same
+      if (isUser?._id) {
+        return res
+          .status(200)
+          .json({ job: isUser, message: "Job updated successfully!" });
       }
     } else {
       return res.status(401).json({ error: "Somethings went wrong!" });
@@ -157,14 +240,78 @@ const deleteJob = async (req, res, next) => {
 
 // Get all the jobs
 const getJobs = async (req, res, next) => {
-  const page = parseInt(req.query.page) || 1;
-  const perPage = 10;
-
   try {
-    const totalPosts = await Jobs.countDocuments();
+    const page = parseInt(req.query.page) || 1; // page number query
+    const perPage = 8; // showing per page job
+    const titleQuery = req.query?.jobTitle || ""; // job title query
+    const jobType = req?.query?.jobType; // in House job query;
+    const workLocation = req?.query?.workLocation; // work location job query;
+    const experienceQuery = req.query?.experience; // experience query
+    const salaryMin = parseInt(req.query?.salaryMin); // Minimum salary query
+    const salaryMax = parseInt(req.query?.salaryMax); // Maximum salary query
+    const locationQuery = req?.query?.location || ""; // location query
+
+    // Create regular expressions for jobTitle and jobType
+    const jobTitleRegex = new RegExp(titleQuery, "i");
+    const filter = {};
+    // Add filters to the filter object if provided in the query parameters
+    if (titleQuery) filter.jobTitle = jobTitleRegex;
+
+    if (jobType === "partTime") {
+      filter.jobType = "partTime";
+    }
+    if (jobType === "fullTime") {
+      filter.jobType = "fullTime";
+    }
+    if (workLocation === "Remote") {
+      filter.workLocation = "Remote";
+    }
+    if (workLocation === "InHouse") {
+      filter.workLocation = "InHouse";
+    }
+
+    if (salaryMin && salaryMax) {
+      filter["salary.salaryRange.from"] = { $gte: salaryMin || 0 };
+      filter["salary.salaryRange.to"] = {
+        $lte: salaryMax || Number.MAX_SAFE_INTEGER,
+      };
+    } else if (salaryMin && !salaryMax) {
+      filter["salary.salaryRange.from"] = { $gte: salaryMin || 0 };
+    } else if (salaryMax && !salaryMin) {
+      filter["salary.salaryRange.to"] = {
+        $lte: salaryMax || Number.MAX_SAFE_INTEGER,
+      };
+    }
+    // Create filter conditions for experience range
+    if (experienceQuery) {
+      const experienceValue = parseInt(experienceQuery);
+
+      if (experienceValue === 0) {
+        filter["experience.experienceRange.to"] = {
+          $lte: 2,
+        };
+      } else if (experienceValue > 5) {
+        filter["experience.experienceRange.to"] = {
+          $gte: 6,
+        };
+      } else {
+        filter["experience.experienceRange.from"] = {
+          $lte: experienceValue,
+        };
+        filter["experience.experienceRange.to"] = {
+          $gte: experienceValue,
+        };
+      }
+    }
+
+    if (locationQuery) {
+    }
+
+    // Count the number of documents that match the filter
+    const totalPosts = await Jobs.countDocuments(filter);
     const totalPages = Math.ceil(totalPosts / perPage);
 
-    const allJobs = await Jobs.find()
+    const jobs = await Jobs.find(filter)
       .populate("company")
       .skip((page - 1) * perPage)
       .limit(perPage);
@@ -175,12 +322,12 @@ const getJobs = async (req, res, next) => {
       totalJob: totalPosts,
       hasPreviousPage: page > 1,
       hasNextPage: page < totalPages,
-      jobs: allJobs,
+      jobs: jobs,
     };
 
     return res.status(200).json(response);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    next(error);
   }
 };
 
@@ -193,6 +340,9 @@ const getJobDetails = async (req, res, next) => {
       const jobDetails = await Jobs.findOne(query).populate("company");
       if (jobDetails?._id) {
         res.status(200).json({ jobDetails });
+        await Jobs.findOneAndUpdate(query, {
+          $set: { jobViews: jobDetails?.jobViews + 1 },
+        });
       }
     }
   } catch (error) {
@@ -259,11 +409,7 @@ const getSavedJob = async (req, res, next) => {
   try {
     const { userId, jobId } = req?.params;
     const isSavedJob = await saveJob.findOne({ userId: userId, jobId: jobId });
-    if (isSavedJob?._id) {
-      res.status(200).json({ userId: userId });
-    } else {
-      res.status(500);
-    }
+    return res.status(200).json({ userId: isSavedJob?.userId });
   } catch (error) {
     next(error);
   }
@@ -274,13 +420,53 @@ const getSavedJobs = async (req, res, next) => {
   try {
     const { userId } = req?.params;
     if (userId) {
-      // const isSavedJob = await saveJob
-      //   .find({ userId })
-      //   .populate("jobId")
-      //   .populate("company")
-      // if (savedJobsWithCompanyDetails) {
-      //   res.status(200).json({ jobs: savedJobsWithCompanyDetails });
-      // }
+      const savedJobsWithJobDetails = await saveJob.aggregate([
+        {
+          $match: {
+            userId: userId,
+          },
+        },
+        {
+          $addFields: {
+            jobIdToLookup: { $toObjectId: "$jobId" },
+          },
+        },
+        {
+          $lookup: {
+            from: "jobs",
+            localField: "jobIdToLookup",
+            foreignField: "_id",
+            as: "jobDetails",
+          },
+        },
+        {
+          $unwind: "$jobDetails",
+        },
+        {
+          $addFields: {
+            companyIdToLookup: { $toObjectId: "$jobDetails.company" },
+          },
+        },
+        {
+          $lookup: {
+            from: "companies",
+            localField: "companyIdToLookup",
+            foreignField: "_id",
+            as: "jobDetails.company",
+          },
+        },
+        {
+          $unwind: "$jobDetails.company",
+        },
+        {
+          $project: {
+            jobIdToLookup: 0,
+            companyIdToLookup: 0,
+          },
+        },
+      ]);
+
+      res.status(200).json({ jobs: savedJobsWithJobDetails });
     }
   } catch (error) {
     next(error);
@@ -289,6 +475,7 @@ const getSavedJobs = async (req, res, next) => {
 
 module.exports = {
   createJob,
+  editJob,
   getJobs,
   getEmployeerJobList,
   getJobDetails,

@@ -10,6 +10,7 @@ import styles from "./ApplyJob.module.css";
 export default function ApplyJob() {
   const [coverLetter, setCoverLetter] = useState("");
   const [jobDutyAgreeMent, setJobDutyAgreement] = useState("");
+
   const { jobId } = useParams();
   // User data
   const { user } = useSelector((state) => state.authSlice);
@@ -22,7 +23,7 @@ export default function ApplyJob() {
   } = useGetJobQuery({ jobId: jobId });
 
   // Post application state
-  const [postJobApplication, { data: postJobApplicationResponse }] =
+  const [postJobApplication, { data: postJobApplicationResponse, isSuccess }] =
     usePostJobApplicationMutation();
 
   const handleJobApply = () => {
@@ -38,7 +39,6 @@ export default function ApplyJob() {
       postJobApplication(application);
     }
   };
-
   return (
     <div className="container">
       <div className={styles.applyJobWrraper}>

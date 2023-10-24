@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userNameSearchText: "ra",
+  userNameSearchText: "",
 };
 
 const SearchApplicantSlice = createSlice({

@@ -42,7 +42,7 @@
 }
 
 :root {
-  --primary-color: #4640de;
+  --primary-color: #15ae81;
   --primary-hover: #3833c9;
   --secondary-color: #26a4ff;
   --footer-bg: #202430;
@@ -61,6 +61,86 @@
 
 body {
   font-family: "Inter", sans-serif !important;
+}
+
+.initialLoadingWrapper {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.initialLoader {
+  width: 50px;
+  aspect-ratio: 1.154;
+  position: relative;
+  background: conic-gradient(
+    from 120deg at 50% 64%,
+    #0000,
+    #25b09b 1deg 120deg,
+    #0000 121deg
+  );
+  animation: sp7-0 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
+}
+.initialLoader:before,
+.initialLoader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  transform-origin: 50% 66%;
+  animation: sp7-1 1.5s infinite;
+}
+.initialLoader:after {
+  --s: -1;
+}
+
+@keyframes sp7-0 {
+  0%,
+  30% {
+    transform: rotate(0);
+  }
+  70% {
+    transform: rotate(120deg);
+  }
+  70.01%,
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sp7-1 {
+  0% {
+    transform: rotate(calc(var(--s, 1) * 120deg)) translate(0);
+  }
+  30%,
+  70% {
+    transform: rotate(calc(var(--s, 1) * 120deg))
+      translate(calc(var(--s, 1) * -5px), 10px);
+  }
+  100% {
+    transform: rotate(calc(var(--s, 1) * 120deg)) translate(0);
+  }
+}
+
+.contentLoader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #4640de 94%, #0000) top/8px 8px
+      no-repeat,
+    conic-gradient(#0000 30%, #4640de);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: contentLoaderTransition 1s infinite linear;
+}
+
+@keyframes contentLoaderTransition {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 .container {
@@ -226,6 +306,7 @@ body {
   z-index: 10000;
   animation: fadeIn 0.5s;
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -248,6 +329,7 @@ body {
   color: var(--base-white);
   cursor: pointer;
   transition: all 0.4s ease;
+  text-decoration: none;
 }
 
 .cancel-delete {

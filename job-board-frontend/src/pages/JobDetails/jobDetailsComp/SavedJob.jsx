@@ -11,10 +11,11 @@ export default function SavedJob({ userId, jobId, companyId }) {
   const [postSavedJob, { data, isLoading, isSuccess }] =
     usePostSavedJobMutation();
 
-  const { data: isSavedJob, refetch } = useGetSavedJobQuery({
-    userId,
-    jobId,
-  });
+  const { data: isSavedJob, isLoading: gettingIsSavedJobLoading } =
+    useGetSavedJobQuery({
+      userId,
+      jobId,
+    });
 
   const handlePostSavedJob = () => {
     const savedJobObj = {
@@ -30,32 +31,43 @@ export default function SavedJob({ userId, jobId, companyId }) {
 
   useEffect(() => {
     if (isSuccess) {
-      refetch();
     }
-  }, [isSuccess, refetch]);
+  }, [isSuccess]);
 
   return (
     <>
-      {isSavedJob?.userId ? (
-        isLoading ? (
-          <img src={SavedJobLoadinAnimation} alt="" />
-        ) : (
-          <AiFillHeart
-            className={styles.fillHeart}
-            onClick={() => {
-              handlePostSavedJob(jobId);
-            }}
-          />
-        )
-      ) : isLoading ? (
-        <img src={SavedJobLoadinAnimation} alt="" />
-      ) : (
-        <AiOutlineHeart
-          className={styles.emptyHeart}
-          onClick={() => {
-            handlePostSavedJob(jobId);
-          }}
-        />
+      {gettingIsSavedJobLoading ? null : (
+        <>
+          {isSavedJob?.userId ? (
+            isLoading ? (
+              <img
+                className={styles.savedJobLoadingAnim}
+                src={SavedJobLoadinAnimation}
+                alt=""
+              />
+            ) : (
+              <AiFillHeart
+                className={styles.fillHeart}
+                onClick={() => {
+                  handlePostSavedJob(jobId);
+                }}
+              />
+            )
+          ) : isLoading ? (
+            <img
+              className={styles.savedJobLoadingAnim}
+              src={SavedJobLoadinAnimation}
+              alt=""
+            />
+          ) : (
+            <AiOutlineHeart
+              className={styles.emptyHeart}
+              onClick={() => {
+                handlePostSavedJob(jobId);
+              }}
+            />
+          )}
+        </>
       )}
     </>
   );
