@@ -1,0 +1,47 @@
+.similarJobCard {
+  width: 100%;
+  background-color: var(--base-white);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.saveBtn {
+  cursor: pointer;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.viewBtn {
+  width: 80px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background-color: #e7f7f2;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  color: var(--primary-color);
+  border: 1px solid #8ce0c6;
+  transition: all 0.2s linear;
+}
+
+.viewBtn:hover {
+  background-color: #83d3ba;
+  color: var(--base-white);
+  cursor: pointer;
+  border: 1px solid #4ab391;
+}

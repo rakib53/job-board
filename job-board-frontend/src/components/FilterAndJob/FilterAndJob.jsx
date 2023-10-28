@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetJobsQuery } from "../../features/jobSlice/jobApi";
 import FilteringJob from "../FilteringJob/FilteringJob";
-import JobCard from "../JobCard/JobCard";
+import Card from "../JobCard/Card";
 import ArrowLeftIcon from "../SVG/JobFinding/ArrowLeftIcon";
 import ArrowRightIcon from "../SVG/JobFinding/ArrowRightIcon";
 import styles from "./FilterAndJob.module.css";
@@ -86,7 +86,7 @@ export default function FilterAndJob() {
   if (!isLoading && !isError && allTheJobs?.jobs?.length > 0) {
     content = allTheJobs?.jobs?.map((job) => {
       return (
-        <JobCard key={job._id} jobInfo={job} handleJobApply={handleJobApply} />
+        <Card key={job._id} jobInfo={job} handleJobApply={handleJobApply} />
       );
     });
   }

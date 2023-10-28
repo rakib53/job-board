@@ -49,6 +49,8 @@
   --base-white: #fff;
   --base-black: #000000;
   --border-color: #d6ddeb;
+  --input-Border-Color: #e2e2ea;
+  --input-Border-Error: rgb(255, 47, 40);
   /* Fonts  */
   --primary-font: "Inter", Helvetica, Arial, sans-serif;
 }
@@ -61,6 +63,7 @@
 
 body {
   font-family: "Inter", sans-serif !important;
+  background-color: #f9fafc;
 }
 
 .initialLoadingWrapper {
@@ -148,6 +151,12 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+/* Error Input CSS  */
+
+.errorInput {
+  border: 1px solid var(--input-Border-Error);
 }
 
 .line {

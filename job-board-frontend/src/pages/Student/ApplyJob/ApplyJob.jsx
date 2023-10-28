@@ -8,7 +8,10 @@ import {
 import styles from "./ApplyJob.module.css";
 
 export default function ApplyJob() {
-  const [coverLetter, setCoverLetter] = useState("");
+  const [coverLetter, setCoverLetter] = useState({
+    coverLetter: "",
+    error: false,
+  });
   const [jobDutyAgreeMent, setJobDutyAgreement] = useState("");
 
   const { jobId } = useParams();
@@ -27,18 +30,30 @@ export default function ApplyJob() {
     usePostJobApplicationMutation();
 
   const handleJobApply = () => {
-    const application = {
-      userId: user?._id,
-      jobId: jobDetails?.jobDetails?._id,
-      companyId: jobDetails?.jobDetails?.company?._id,
-      coverLetter,
-      jobTerms: jobDutyAgreeMent,
-    };
+    try {
+      if (coverLetter?.coverLetter?.length <= 250) {
+        setCoverLetter({ ...coverLetter, error: true });
+        return;
+      } else {
+        const application = {
+          userId: user?._id,
+          jobId: jobDetails?.jobDetails?._id,
+          companyId: jobDetails?.jobDetails?.company?._id,
+          coverLetter: coverLetter?.coverLetter,
+          jobTerms: jobDutyAgreeMent,
+        };
 
-    if (application?.userId && application?.jobId) {
-      postJobApplication(application);
+        if (application?.userId && application?.jobId) {
+          postJobApplication(application);
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  console.log(postJobApplicationResponse);
+
   return (
     <div className="container">
       <div className={styles.applyJobWrraper}>
@@ -53,19 +68,27 @@ export default function ApplyJob() {
             {jobDetails?.jobDetails?.description}
           </p>
         </div>
+        {/* Apply Job Form  */}
+        <div>
+          <h3>Submit Your Application</h3>
+        </div>
         <h2 className={styles.coverLetterText}>Cover letter</h2>
         <p className={styles.assessmentQuestion}>
           Why should you be hired for this role?
         </p>
         <form action="">
           <textarea
-            className={styles.coverLetterInput}
+            className={`${styles.coverLetterInput} ${
+              coverLetter?.error && "errorInput"
+            }`}
             name=""
             id=""
             cols="30"
             rows="10"
-            value={coverLetter}
-            onChange={(e) => setCoverLetter(e.target.value)}
+            value={coverLetter?.coverLetter}
+            onChange={(e) =>
+              setCoverLetter({ ...coverLetter, coverLetter: e.target.value })
+            }
           ></textarea>
         </form>
 
@@ -106,8 +129,20 @@ export default function ApplyJob() {
             </label>
           </div>
         </div>
+        <div className={styles.termsAndCondition}>
+          <input
+            type="checkbox"
+            id="termsAndCondition"
+            className="secondary-custom-checkbox"
+          />
+          <label htmlFor="termsAndCondition">
+            I agree with terms & conditions
+          </label>
+        </div>
         <div onClick={() => handleJobApply()}>
-          <button className="primaryBtn">Submit application</button>
+          <button className={`primaryBtn ${styles.submitApplication}`}>
+            Submit application
+          </button>
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ import JobLocationIcon from "../../components/SVG/JobDetailsIocns/JobLocationIco
 import JobPostedIcon from "../../components/SVG/JobDetailsIocns/JobPostedIcon";
 import ShareJobIcon from "../../components/SVG/JobDetailsIocns/ShareJobIcon";
 import StartDateIcon from "../../components/SVG/JobDetailsIocns/StartDateIcon";
+import SimilarJobCard from "../../components/SimilarJob/SimilarJobCard";
 import { useGetJobQuery } from "../../features/jobSlice/jobApi";
 import styles from "./JobDetails.module.css";
 import SavedJob from "./jobDetailsComp/SavedJob";
@@ -83,14 +84,11 @@ export default function JobDetails() {
 
     content = (
       <div className={styles.JobDetailsPageWrapper}>
-        <h1 className={styles.jobAtCompany}>
-          {jobTitle} Job{" "}
-          {jobType === "InHouseJob" && `in ${company?.companyLocation}`} at{" "}
-          {company?.companyName}
-        </h1>
         <div className={styles.JobDetailsWrapper}>
           <h2 className={styles.jobTitle}>{jobTitle}</h2>
-          <p className={styles.companyName}>{company?.companyName}</p>
+          <p className={styles.companyName}>
+            {company?.companyName},{company?.companyLocation}
+          </p>
           {jobType === "InHouseJob" ? (
             <>
               <div className={styles.InHouseJob}>
@@ -292,5 +290,45 @@ export default function JobDetails() {
     }
   };
 
-  return <div className="container">{content}</div>;
+  return (
+    <div className="container">
+      <div className={styles.jobAndSimilarJobWrapper}>
+        <div>
+          <p className={styles.goBack}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+            >
+              <path
+                d="M11.25 4.5L6.75 9L11.25 13.5"
+                stroke="#92929D"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <Link to={"/"} className={styles.back}>
+              Back
+            </Link>
+          </p>
+          {content}
+        </div>
+        <div className={styles.similarJobs}>
+          <h4 className={styles.simlilarKJobText}>Similar Jobs</h4>
+          <div className={styles.similarJobWrapper}>
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
