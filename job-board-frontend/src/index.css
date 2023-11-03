@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
 @font-face {
   font-family: "rocGroteskLight";
@@ -43,7 +44,7 @@
 
 :root {
   --primary-color: #15ae81;
-  --primary-hover: #3833c9;
+  --primary-hover: #13966f;
   --secondary-color: #26a4ff;
   --footer-bg: #202430;
   --base-white: #fff;
@@ -52,7 +53,8 @@
   --input-Border-Color: #e2e2ea;
   --input-Border-Error: rgb(255, 47, 40);
   /* Fonts  */
-  --primary-font: "Inter", Helvetica, Arial, sans-serif;
+  --primary-font: "Manrope", Helvetica, Arial, sans-serif;
+  --secondary-font: "Inter", Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -62,7 +64,7 @@
 }
 
 body {
-  font-family: "Inter", sans-serif !important;
+  font-family: var(--primary-font);
   background-color: #f9fafc;
 }
 

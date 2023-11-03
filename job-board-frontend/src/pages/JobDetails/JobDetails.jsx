@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { useSelector } from "react-redux";
@@ -6,7 +7,6 @@ import ApplicantIcon from "../../components/SVG/JobDetailsIocns/ApplicantIcon";
 import ApplyDateIcon from "../../components/SVG/JobDetailsIocns/ApplyDateIcon";
 import CTCAnualIcon from "../../components/SVG/JobDetailsIocns/CTCAnualIcon";
 import ExperienceIcon from "../../components/SVG/JobDetailsIocns/ExperienceIcon";
-import JobLocationIcon from "../../components/SVG/JobDetailsIocns/JobLocationIcon";
 import JobPostedIcon from "../../components/SVG/JobDetailsIocns/JobPostedIcon";
 import ShareJobIcon from "../../components/SVG/JobDetailsIocns/ShareJobIcon";
 import StartDateIcon from "../../components/SVG/JobDetailsIocns/StartDateIcon";
@@ -79,54 +79,51 @@ export default function JobDetails() {
       probation,
       salary,
       applicants,
+      timeStamp,
       _id,
     } = jobDetails?.jobDetails;
 
     content = (
       <div className={styles.JobDetailsPageWrapper}>
         <div className={styles.JobDetailsWrapper}>
-          <h2 className={styles.jobTitle}>{jobTitle}</h2>
-          <p className={styles.companyName}>
-            {company?.companyName},{company?.companyLocation}
-          </p>
-          {jobType === "InHouseJob" ? (
-            <>
-              <div className={styles.InHouseJob}>
-                <span className={styles.InHouseJobIcon}>
-                  <JobLocationIcon />
-                </span>
-                <span className={styles.InHouseJobLocation}>
-                  {company?.companyLocation}
-                </span>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
+          <div className={styles.jobDetailsHeader}>
+            <div>
+              <h2 className={styles.jobTitle}>{jobTitle}</h2>
+              <p className={styles.companyName}>
+                {company?.companyName}
+                {" - "}
+                {company?.companyLocation}
+              </p>
+            </div>
+            <div className={styles.applyBtnHeaderWrapper}>
+              <button className={styles.applyNowBtn}>Apply Now</button>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 7C13.104 7 14 6.104 14 5C14 3.896 13.104 3 12 3C10.896 3 10 3.896 10 5C10 6.104 10.896 7 12 7ZM12 10C10.896 10 10 10.896 10 12C10 13.104 10.896 14 12 14C13.104 14 14 13.104 14 12C14 10.896 13.104 10 12 10ZM10 19C10 17.896 10.896 17 12 17C13.104 17 14 17.896 14 19C14 20.104 13.104 21 12 21C10.896 21 10 20.104 10 19Z"
+                    fill="#757D8A"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
 
           <div className={styles.basicJobInfoWrapper}>
             <div className={styles.basicJobCard}>
               <div className={styles.basicJobHeader}>
                 <StartDateIcon />
-                <p className={styles.basicJobInfoTitle}>START DATE</p>
-              </div>
-              <span className={styles.basicJobInfoValue}>{joinDate}</span>
-            </div>
-            <div className={styles.basicJobCard}>
-              <div className={styles.basicJobHeader}>
-                <CTCAnualIcon />
-                <p className={styles.basicJobInfoTitle}>Salary</p>
+                <p className={styles.basicJobInfoTitle}>Employee Type</p>
               </div>
               <span className={styles.basicJobInfoValue}>
-                {salary?.salaryRange?.from &&
-                  salary?.salaryRange?.to &&
-                  `$ ${formatUSD(salary?.salaryRange?.from)} - ${formatUSD(
-                    salary?.salaryRange?.to
-                  )}`}
-
-                {salary?.salaryRange?.from &&
-                  !salary?.salaryRange?.to &&
-                  `$ ${formatUSD(salary?.salaryRange?.from)}`}
+                {jobType === "fullTime" ? "Full time Job" : "Part time job"}
               </span>
             </div>
             <div className={styles.basicJobCard}>
@@ -143,6 +140,24 @@ export default function JobDetails() {
             </div>
             <div className={styles.basicJobCard}>
               <div className={styles.basicJobHeader}>
+                <CTCAnualIcon />
+                <p className={styles.basicJobInfoTitle}>Salary(Annual)</p>
+              </div>
+              <span className={styles.basicJobInfoValue}>
+                {salary?.salaryRange?.from &&
+                  salary?.salaryRange?.to &&
+                  `$ ${formatUSD(salary?.salaryRange?.from)} - ${formatUSD(
+                    salary?.salaryRange?.to
+                  )}`}
+
+                {salary?.salaryRange?.from &&
+                  !salary?.salaryRange?.to &&
+                  `$ ${formatUSD(salary?.salaryRange?.from)}`}
+              </span>
+            </div>
+
+            <div className={styles.basicJobCard}>
+              <div className={styles.basicJobHeader}>
                 <ApplyDateIcon />
                 <p className={styles.basicJobInfoTitle}>APPLY END IN</p>
               </div>
@@ -152,10 +167,10 @@ export default function JobDetails() {
 
           <div className={styles.jobBodyInfo}>
             <div className={styles.jobPostedAt}>
-              <span>
+              <span className={styles.jobPostIcon}>
                 <JobPostedIcon />
               </span>
-              <span>Posted few hours ago</span>
+              <span>{moment(timeStamp).startOf("day").fromNow()}</span>
             </div>
             <span className={styles.job}>Job</span>
           </div>
@@ -205,7 +220,6 @@ export default function JobDetails() {
           </div>
           <div>
             <h4 className={styles.title}>Skill(s) required</h4>
-            <h5>Earn certifications in these skills</h5>
             <div className={styles.skillsWraper}>
               <span className={styles.skill}>English Proficiency (Spoken)</span>
               <span className={styles.skill}>Hindi Proficiency (Spoken)</span>
@@ -250,11 +264,11 @@ export default function JobDetails() {
             <h4 className={styles.title}>Number of openings</h4>
             <span className={styles.jobDescription}> {numberOfOpen}</span>
           </div>
-          <div className={styles.applyNowBtnWrapper}>
+          <div className={styles.applyBtnFooterWrapper}>
             <button
               className={`${
-                user?.role === "employeer" && styles.applyNowBtn
-              } primaryBtn`}
+                user?.role === "employeer" && styles.applyNowEmployeerDisableBtn
+              } ${styles.applyNowFooterBtn}`}
               disabled={user?.role === "employeer"}
               onClick={() => handleJobApply()}
             >

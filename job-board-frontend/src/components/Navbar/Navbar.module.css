@@ -15,7 +15,7 @@
 .logoAndMenuWrapper {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 10px;
 }
 
 .logoWrapper {
@@ -29,6 +29,21 @@
 .navbarMenu {
   display: flex;
   list-style-type: none;
+}
+
+.singUpBtn {
+  text-align: center;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: var(--primary-font);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: var(--primary-color);
 }
 
 .menuList {
@@ -53,6 +68,11 @@
   display: flex;
   align-items: center;
   gap: 30px;
+}
+
+.navbarMenuWrapper span {
+  display: flex;
+  align-items: center;
 }
 
 .postAJob {
@@ -87,6 +107,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 
 .avatar {
@@ -278,9 +299,18 @@
 }
 
 @media screen and (max-width: 650px) {
+  .mobileContentOff {
+    display: none !important;
+  }
+
   .mobileMenuIcon {
     display: block;
     cursor: pointer;
+  }
+
+  .singUpBtn {
+    padding: 10px 20px;
+    font-size: 13px;
   }
 
   .navbarOverley {
@@ -351,6 +381,9 @@
     width: 100%;
     height: 60px;
     bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1550;
     padding: 5px 25px;
     background-color: var(--base-white);
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.08);
@@ -398,12 +431,17 @@
 
 @media screen and (max-width: 350px) {
   .navbarMenu {
-    max-width: 90vw;
+    max-width: 80vw;
     width: 100%;
   }
 
   .logoWrapper {
-    width: 100px;
+    width: 90px;
+  }
+
+  .singUpBtn {
+    padding: 8px 20px;
+    font-size: 13px;
   }
 
   .logoAndMenuWrapper {

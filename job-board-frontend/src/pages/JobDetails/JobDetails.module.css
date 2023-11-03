@@ -21,6 +21,11 @@
   color: #3f3f3f;
 }
 
+.jobDetailsHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
 .companyName {
   font-size: 16px;
   font-family: var(--primary-font);
@@ -39,6 +44,38 @@
   font-family: var(--primary-font);
   color: #242424;
   margin-bottom: 2px;
+}
+
+.applyBtnHeaderWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.applyBtnHeaderWrapper > .applyNowBtn,
+.applyNowFooterBtn {
+  color: var(--White, #fff);
+  text-align: center;
+  font-family: var(--primary-font);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 160% */
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: none;
+  outline: none;
+  background-color: var(--primary-color);
+}
+
+.applyBtnHeaderWrapper > .applyNowBtn:hover {
+  cursor: pointer;
+  background-color: var(--primary-hover);
+}
+
+.applyNowEmployeerDisableBtn {
+  cursor: no-drop !important;
+  background-color: rgb(192, 191, 191) !important;
 }
 
 .basicJobInfoWrapper {
@@ -62,16 +99,20 @@
 
 .basicJobInfoTitle {
   font-size: 14px;
-  font-family: var(--primary-font);
-  margin-bottom: 15px;
+  margin-bottom: 7px;
   color: #8a8a8a;
   text-transform: uppercase;
+  font-weight: 600;
+  line-height: 24px;
+  font-family: var(--primary-font);
 }
 
 .basicJobInfoValue {
-  font-size: 14px;
+  font-size: 16px;
+  color: #44444f;
+  font-weight: 600;
+  line-height: 24px;
   font-family: var(--primary-font);
-  color: #8a8a8a;
 }
 
 .jobBodyInfo {
@@ -86,10 +127,15 @@
   gap: 3px;
   font-size: 12px;
   font-family: var(--primary-font);
-  background-color: rgba(215, 255, 155, 0.267);
-  color: #05c715;
+  background-color: #e7f7f2;
+  color: var(--primary-color);
   padding: 3px 6px;
   border-radius: 5px;
+}
+
+.jobPostIcon {
+  display: flex;
+  align-items: center;
 }
 
 .job {
@@ -216,11 +262,6 @@
 
 /* Skills section CSS end here  */
 
-.applyNowBtn {
-  cursor: no-drop !important;
-  background-color: rgb(192, 191, 191) !important;
-}
-
 /* JOB AND SIMILAR JOB CSS START HERE */
 
 .goBack {
@@ -275,4 +316,68 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.applyBtnFooterWrapper {
+  display: none;
+}
+
+@media screen and (max-width: 785px) {
+  .applyBtnFooterWrapper {
+    display: block;
+  }
+
+  .applyBtnHeaderWrapper {
+    display: none;
+  }
+
+  .jobAndSimilarJobWrapper {
+    flex-direction: column;
+  }
+
+  .similarJobs {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .basicJobInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 15px 0;
+  }
+
+  .basicJobCard {
+    padding: 12px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .basicJobInfoTitle {
+    font-size: 13px;
+    font-family: var(--primary-font);
+    margin-bottom: 7px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  .basicJobInfoValue {
+    font-size: 16px;
+    font-family: var(--primary-font);
+    color: #44444f;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .applyNowFooterBtn {
+    width: 100%;
+  }
 }

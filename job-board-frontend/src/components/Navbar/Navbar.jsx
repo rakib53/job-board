@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import avatarImage from "../../../public/Profile.jpg";
-import LOGO from "../../assets/logo/job.png";
+import avatarImage from "../../../public/profile.jpg";
+import LOGO from "../../assets/logo/Logo.svg";
 import { logut } from "../../features/auth/authSlice";
 import { getCompanyInfo } from "../../features/companySlice/companySlice";
 import styles from "./Navbar.module.css";
@@ -58,22 +58,24 @@ const Navbar = () => {
                 stroke="currentColor"
                 fill="currentColor"
                 stroke-width="0"
-                viewBox="0 0 20 20"
-                aria-hidden="true"
-                class="_mobileMenuBar_1kl7y_539"
-                height="28px"
-                width="28px"
+                viewBox="0 0 32 32"
+                height="24"
+                width="24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                  clip-rule="evenodd"
-                ></path>
+                <path d="M 4 7 L 4 9 L 28 9 L 28 7 Z M 4 15 L 4 17 L 28 17 L 28 15 Z M 4 23 L 4 25 L 28 25 L 28 23 Z"></path>
               </svg>
             </span>
             <div className={styles.logoWrapper}>
-              <Link to={"/"}>
+              <Link
+                to={`${
+                  user?._id
+                    ? user?.role === "employeer"
+                      ? "/employeer/dashboard"
+                      : "/student/dashboard"
+                    : "/"
+                }`}
+              >
                 <img className={styles.logo} src={LOGO} alt="" />
               </Link>
             </div>
@@ -108,7 +110,7 @@ const Navbar = () => {
                   <button
                     className={`${styles.postAJob} ${styles.monileContentOff}`}
                   >
-                    <span style={{ display: "flex", alignItems: "center" }}>
+                    <span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="21"
@@ -128,7 +130,7 @@ const Navbar = () => {
                   </button>
                 )}
 
-                <span style={{ display: "flex", alignItems: "center" }}>
+                <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
@@ -145,7 +147,7 @@ const Navbar = () => {
                   </svg>
                 </span>
 
-                <span className={`${styles.monileContentOff}`}>
+                <span className={styles.mobileContentOff}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="25"
@@ -350,11 +352,11 @@ const Navbar = () => {
               <></>
             ) : (
               <>
-                <Link to={"/sign-in"} className={styles.loginBtn}>
+                {/* <Link to={"/sign-in"} className={styles.loginBtn}>
                   Login
-                </Link>
-                <span className="line"></span>
-                <Link to={"/sign-up"} className="primaryBtn">
+                </Link> */}
+                {/* <span className="line"></span> */}
+                <Link to={"/sign-up"} className={styles.singUpBtn}>
                   Sign up
                 </Link>
               </>
