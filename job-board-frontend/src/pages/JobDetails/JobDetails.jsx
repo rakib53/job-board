@@ -96,8 +96,16 @@ export default function JobDetails() {
               </p>
             </div>
             <div className={styles.applyBtnHeaderWrapper}>
-              <button className={styles.applyNowBtn}>Apply Now</button>
-              <span>
+              <button
+                className={`${
+                  user?.role === "employeer" &&
+                  styles.applyNowEmployeerDisableBtn
+                } ${styles.applyNowBtn}`}
+                disabled={user?.role === "employeer"}
+              >
+                Apply Now
+              </button>
+              <span className={styles.headerMoreBtn}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

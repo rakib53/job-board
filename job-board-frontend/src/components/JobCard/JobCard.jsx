@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import companyLogo from "../../assets/logo/job.png";
+import companyLogo from "../../assets/logo/Logo.svg";
 import styles from "./JobCard.module.css";
 
 // Formating the salary
@@ -96,10 +96,13 @@ export default function JobCard({ jobInfo = {}, handleJobApply }) {
       </div>
 
       <div className={styles.applyBtnWrapper}>
-        <button onClick={() => handleJobApply(jobId)} className="primaryBtn">
+        <button
+          onClick={() => handleJobApply(jobId)}
+          className={styles.applyBtn}
+        >
           Apply
         </button>
-        <Link to={`/job/${jobId}`} className="primaryBtn">
+        <Link to={`/job/${jobId}`} className={styles.applyBtn}>
           See details
         </Link>
       </div>

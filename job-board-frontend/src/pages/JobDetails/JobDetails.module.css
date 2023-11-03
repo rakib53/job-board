@@ -78,6 +78,10 @@
   background-color: rgb(192, 191, 191) !important;
 }
 
+.headerMoreBtn {
+  cursor: pointer;
+}
+
 .basicJobInfoWrapper {
   display: flex;
   gap: 40px;

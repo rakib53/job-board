@@ -1,9 +1,10 @@
 .JobInfoWrapper {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid #e7e7e7;
+  background-color: var(--base-white);
 }
 
 .companyLogoWrapper {
@@ -83,10 +84,40 @@
   gap: 10px;
 }
 
+.applyBtn {
+  text-align: center;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: var(--primary-font);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  background-color: var(--primary-color);
+}
+
 .capacity {
   margin-top: 5px;
   font-size: 13px;
   font-family: var(--primary-font);
+}
+
+@media screen and (max-width: 768px) {
+  .otherInfo {
+    display: flex;
+    gap: 15px;
+    margin-top: 18px;
+  }
+
+  .infoTitle {
+    margin-top: 0px;
+  }
+  .jobTitle {
+    font-size: 18px;
+  }
 }
 
 @media screen and (max-width: 550px) {
@@ -103,7 +134,7 @@
 
   .OtherInfoWrapper {
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
   }
 
   .otherInfo {

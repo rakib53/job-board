@@ -19,7 +19,9 @@
 }
 
 .allJobText {
-  line-height: 30px;
+  font-size: 26px;
+  line-height: 24px;
+  margin-bottom: 10px;
   font-family: "Poppins", sans-serif;
 }
 
@@ -128,6 +130,7 @@
   .allJobContainer {
     height: 2000px;
   }
+
   .filterAndJobWrapper {
     display: flex;
     flex-direction: column;
@@ -142,5 +145,40 @@
   .allJobInfo {
     padding: 20px 0;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .sortByWrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .allJobText {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 3px;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .showIngJobText {
+    font-size: 13px;
+  }
+
+  .sortBy {
+    display: none;
+    font-size: 13px;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+  }
+
+  .sortByValue {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .sortOptionValue {
+    font-size: 13px;
   }
 }
