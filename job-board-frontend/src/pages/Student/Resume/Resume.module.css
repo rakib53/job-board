@@ -178,3 +178,48 @@
 .plusIcon {
   font-size: 18px;
 }
+
+@media screen and (max-width: 650px) {
+  .studentName {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .downloadText {
+    font-size: 14px;
+  }
+
+  .resumeHeader {
+    flex-direction: column;
+  }
+
+  .download {
+    margin-top: 10px;
+  }
+
+  .informationRow {
+    flex-direction: column;
+  }
+
+  .addNewInfo,
+  .allInformationWrapper {
+    margin-top: 10px;
+  }
+
+  .resumeWrapper {
+    padding: 20px;
+  }
+
+  .propretyName,
+  .addNewInfo {
+    font-size: 12px;
+  }
+
+  .note {
+    font-size: 13px;
+  }
+
+  .resumePageWrapper {
+    margin-bottom: 100px;
+  }
+}

@@ -97,6 +97,7 @@ export default function JobDetails() {
             </div>
             <div className={styles.applyBtnHeaderWrapper}>
               <button
+                onClick={() => handleJobApply()}
                 className={`${
                   user?.role === "employeer" &&
                   styles.applyNowEmployeerDisableBtn

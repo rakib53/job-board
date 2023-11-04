@@ -100,12 +100,6 @@ export default function FilterAndJob() {
     setPage(1);
   }, [searchQuery, jobTitle, location]);
 
-  const handleJobContentScroll = (e) => {
-    if (isInJobContent) {
-      e.stopPropagation();
-    }
-  };
-
   return (
     <div className={styles.filterAndJobBodyWrapper}>
       <div className="container">
@@ -142,40 +136,41 @@ export default function FilterAndJob() {
               </div>
             </div>
 
-            <div
-              className={styles.allJobContainer}
-              id="job-content"
-              onScroll={handleJobContentScroll}
-            >
+            <div className={styles.allJobContainer} id="job-content">
               {content}
             </div>
-            <div className={styles.previousBtnAndNextBtnWrapper}>
-              <span
-                className={`${
-                  !allTheJobs?.hasPreviousPage && styles.disabledBtn
-                }`}
-                onClick={() => {
-                  if (allTheJobs?.hasPreviousPage) {
-                    setPage(allTheJobs?.currentPage - 1);
-                  }
-                }}
-              >
-                <ArrowLeftIcon />
-              </span>
 
-              {`${page}/${allTheJobs?.totalPages}`}
+            {allTheJobs?.jobs?.length > 0 && (
+              <div className={styles.previousBtnAndNextBtnWrapper}>
+                <span
+                  className={`${
+                    !allTheJobs?.hasPreviousPage && styles.disabledBtn
+                  }`}
+                  onClick={() => {
+                    if (allTheJobs?.hasPreviousPage) {
+                      setPage(allTheJobs?.currentPage - 1);
+                    }
+                  }}
+                >
+                  <ArrowLeftIcon />
+                </span>
 
-              <span
-                className={`${!allTheJobs?.hasNextPage && styles.disabledBtn}`}
-                onClick={() => {
-                  if (allTheJobs?.hasNextPage) {
-                    setPage(allTheJobs?.currentPage + 1);
-                  }
-                }}
-              >
-                <ArrowRightIcon />
-              </span>
-            </div>
+                {`${page}/${allTheJobs?.totalPages}`}
+
+                <span
+                  className={`${
+                    !allTheJobs?.hasNextPage && styles.disabledBtn
+                  }`}
+                  onClick={() => {
+                    if (allTheJobs?.hasNextPage) {
+                      setPage(allTheJobs?.currentPage + 1);
+                    }
+                  }}
+                >
+                  <ArrowRightIcon />
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

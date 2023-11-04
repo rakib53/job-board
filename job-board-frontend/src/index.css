@@ -61,6 +61,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -197,6 +198,12 @@ body {
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   line-height: 20px;
+}
+
+@media screen and (max-width: 320px) {
+  .secondary-custom-checkbox + label {
+    font-size: 12px;
+  }
 }
 
 .secondary-custom-checkbox + label:before {

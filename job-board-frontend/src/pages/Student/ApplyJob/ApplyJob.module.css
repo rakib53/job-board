@@ -2,6 +2,9 @@
   max-width: 880px;
   width: 100%;
   margin: 48px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .jobTitle {
@@ -9,15 +12,15 @@
   line-height: 1.25;
   font-weight: 700;
   color: #333;
-  padding-bottom: 20px;
   font-family: var(--primary-font);
 }
 
 .aboutTheJob {
   font-family: var(--primary-font);
-  margin-bottom: 8px;
   font-size: 20px;
-  font-weight: 500;
+  line-height: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
 .jobDescription {
@@ -26,16 +29,6 @@
   color: #333;
   padding-bottom: 20px;
   font-family: var(--primary-font);
-}
-
-.coverLetterText {
-  color: #333;
-  font-family: var(--primary-font);
-  font-size: 24px;
-  line-height: 1.33333333;
-  font-weight: 600;
-  margin-bottom: 15px;
-  margin-top: 20px;
 }
 
 .assessmentQuestion {
@@ -67,15 +60,6 @@
   border: 1px solid var(--primary-color);
 }
 
-.avalibility {
-  font-size: 24px;
-  line-height: 1.33333333;
-  font-weight: 600;
-  margin-top: 24px;
-  margin-bottom: 16px;
-  color: #333;
-}
-
 .confirmYouravalibility {
   font-size: 14px;
   line-height: 1.57142857;
@@ -83,16 +67,95 @@
 }
 
 .avalibilityInput {
-  margin: 15px 0 25px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.avalibilityInputWrapper {
+  display: flex;
+  flex-direction: 20px;
 }
 
 .termsAndCondition {
-  margin-top: 30px;
-  margin-bottom: 25px;
+  margin: 30px 0 20px;
 }
 
 .submitApplication {
   width: 100%;
   border-radius: 10px;
   font-size: 16px;
+}
+
+.fileInputCover {
+  position: relative;
+  width: 100%;
+  padding: 16px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--Natural-2, #f1f1f5);
+}
+
+.fileInput {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  color: var(--base-black);
+  line-height: 22px;
+  text-transform: uppercase;
+  border: 1px solid #0070d2;
+  cursor: pointer;
+}
+
+.insideFileInput {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.fileuploadedName {
+  font-size: 14px;
+  margin-top: 8px;
+  color: #8a8989;
+}
+
+.applyDisableBtn {
+  cursor: no-drop !important;
+  background-color: rgb(192, 191, 191) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .applyJobWrraper {
+    padding-bottom: 50px;
+  }
+  .jobTitle {
+    font-size: 26px;
+  }
+
+  .avalibilityInput {
+    gap: 10px;
+  }
+
+  .avalibilityLabel {
+    line-height: 24px;
+  }
+
+  .attachSVG {
+    width: 16px;
+    height: 16px;
+  }
+
+  .attachResume {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .jobTitle {
+    font-size: 22px;
+  }
 }

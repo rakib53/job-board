@@ -59,7 +59,7 @@
 }
 
 .allJobContainer {
-  height: 90vh;
+  height: 100vh;
   display: flex;
   gap: 20px;
   padding: 30px 0;
