@@ -71,24 +71,33 @@ export default function Resume() {
     });
   };
 
+  const EDUCATION = "education";
+  const JOB = "job";
+  const TRANING_AND_COURSE = "traningCourse";
+  const PERSONAL_PROJECT = "personalProject";
+  const SKILL = "skill";
+  const SOCIAL_LINKS = "socialLinks";
+  const SINGLE_SOCIAL_LINK = "singleSocialLink";
+  const ADDITIONAL_DETAILS = "additionalDetails";
+
   // setting modal content
   let modalContent;
 
-  if (modalType === "education") {
+  if (modalType === EDUCATION) {
     modalContent = <AddEducation handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "job") {
+  } else if (modalType === JOB) {
     modalContent = <AddJob handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "traningCourse") {
+  } else if (modalType === TRANING_AND_COURSE) {
     modalContent = <TraningAndCourse handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "personalProject") {
+  } else if (modalType === PERSONAL_PROJECT) {
     modalContent = <PersonalProject handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "skill") {
+  } else if (modalType === SKILL) {
     modalContent = <Skills handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "socialLinks") {
+  } else if (modalType === SOCIAL_LINKS) {
     modalContent = <SocialLinks handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "singleSocialLink") {
+  } else if (modalType === SINGLE_SOCIAL_LINK) {
     modalContent = <SingleSocialLink handleCloseModal={handleCloseModal} />;
-  } else if (modalType === "additionalDetails") {
+  } else if (modalType === ADDITIONAL_DETAILS) {
     modalContent = <AdditionalDetails handleCloseModal={handleCloseModal} />;
   }
 
@@ -163,7 +172,7 @@ export default function Resume() {
                           onClick={() =>
                             handleEditResumeInfo(
                               educationDetails,
-                              "education",
+                              EDUCATION,
                               "Edit education"
                             )
                           }
@@ -173,7 +182,7 @@ export default function Resume() {
                           onClick={() =>
                             deleteResumeInfo({
                               infoId: educationDetails?._id,
-                              infoType: "education",
+                              infoType: EDUCATION,
                             })
                           }
                         />
@@ -183,7 +192,7 @@ export default function Resume() {
                 })}
                 <div
                   className={styles.addNewInfo}
-                  onClick={() => handleSetModalType("education", "Education")}
+                  onClick={() => handleSetModalType(EDUCATION, "Education")}
                 >
                   <BiPlus className={styles.plusIcon} />
                   <span>Add education</span>
@@ -227,7 +236,7 @@ export default function Resume() {
                           onClick={() =>
                             handleEditResumeInfo(
                               jobDetails,
-                              "job",
+                              JOB,
                               "Edit job details"
                             )
                           }
@@ -237,7 +246,7 @@ export default function Resume() {
                           onClick={() =>
                             deleteResumeInfo({
                               infoId: jobDetails?._id,
-                              infoType: "job",
+                              infoType: JOB,
                             })
                           }
                         />
@@ -247,7 +256,7 @@ export default function Resume() {
                 })}
                 <div
                   className={styles.addNewInfo}
-                  onClick={() => handleSetModalType("job", "Job Details")}
+                  onClick={() => handleSetModalType(JOB, "Job Details")}
                 >
                   <BiPlus className={styles.plusIcon} />
                   <span>Add job</span>
@@ -292,7 +301,7 @@ export default function Resume() {
                             onClick={() =>
                               handleEditResumeInfo(
                                 traingingProgramDetails,
-                                "traningCourse",
+                                TRANING_AND_COURSE,
                                 "Edit Traning details"
                               )
                             }
@@ -302,7 +311,7 @@ export default function Resume() {
                             onClick={() =>
                               deleteResumeInfo({
                                 infoId: traingingProgramDetails?._id,
-                                infoType: "traningCourse",
+                                infoType: TRANING_AND_COURSE,
                               })
                             }
                           />
@@ -314,7 +323,7 @@ export default function Resume() {
                 <div
                   className={styles.addNewInfo}
                   onClick={() =>
-                    handleSetModalType("traning/course", "Training details")
+                    handleSetModalType(TRANING_AND_COURSE, "Training details")
                   }
                 >
                   <BiPlus className={styles.plusIcon} />
@@ -362,7 +371,7 @@ export default function Resume() {
                             onClick={() =>
                               handleEditResumeInfo(
                                 personalProject,
-                                "personalProject",
+                                PERSONAL_PROJECT,
                                 "Edit project details"
                               )
                             }
@@ -372,7 +381,7 @@ export default function Resume() {
                             onClick={() =>
                               deleteResumeInfo({
                                 infoId: personalProject?._id,
-                                infoType: "personalProject",
+                                infoType: PERSONAL_PROJECT,
                               })
                             }
                           />
@@ -384,7 +393,7 @@ export default function Resume() {
                 <div
                   className={styles.addNewInfo}
                   onClick={() =>
-                    handleSetModalType("personalProject", "Work samples")
+                    handleSetModalType(PERSONAL_PROJECT, "Work samples")
                   }
                 >
                   <BiPlus className={styles.plusIcon} />
@@ -417,7 +426,7 @@ export default function Resume() {
                           onClick={() =>
                             handleEditResumeInfo(
                               skill,
-                              "skill",
+                              SKILL,
                               "Edit skill details"
                             )
                           }
@@ -427,7 +436,7 @@ export default function Resume() {
                           onClick={() =>
                             deleteResumeInfo({
                               infoId: skill?._id,
-                              infoType: "skill",
+                              infoType: SKILL,
                             })
                           }
                         />
@@ -438,7 +447,7 @@ export default function Resume() {
               </div>
               <div
                 className={styles.addNewInfo}
-                onClick={() => handleSetModalType("skill", "Skills")}
+                onClick={() => handleSetModalType(SKILL, "Skills")}
               >
                 <BiPlus className={styles.plusIcon} />
                 <span>Add skills</span>
@@ -468,7 +477,7 @@ export default function Resume() {
                         onClick={() =>
                           handleEditResumeInfo(
                             user?.resume?.socialLinks?.blogLink,
-                            "singleSocialLink",
+                            SINGLE_SOCIAL_LINK,
                             "Blog link"
                           )
                         }
@@ -477,7 +486,7 @@ export default function Resume() {
                         className={styles.deleteIcon}
                         onClick={() =>
                           deleteResumeInfo({
-                            infoType: "socialLinks",
+                            infoType: SOCIAL_LINKS,
                             dynamicPropertyName: "blogLink",
                           })
                         }
@@ -500,7 +509,7 @@ export default function Resume() {
                         onClick={() =>
                           handleEditResumeInfo(
                             user?.resume?.socialLinks?.githubLink,
-                            "singleSocialLink",
+                            SINGLE_SOCIAL_LINK,
                             "Github link"
                           )
                         }
@@ -509,7 +518,7 @@ export default function Resume() {
                         className={styles.deleteIcon}
                         onClick={() =>
                           deleteResumeInfo({
-                            infoType: "socialLinks",
+                            infoType: SOCIAL_LINKS,
                             dynamicPropertyName: "githubLink",
                           })
                         }
@@ -532,7 +541,7 @@ export default function Resume() {
                         onClick={() =>
                           handleEditResumeInfo(
                             user?.resume?.socialLinks?.playStore,
-                            "singleSocialLink",
+                            SINGLE_SOCIAL_LINK,
                             "Playstore link"
                           )
                         }
@@ -541,7 +550,7 @@ export default function Resume() {
                         className={styles.deleteIcon}
                         onClick={() =>
                           deleteResumeInfo({
-                            infoType: "socialLinks",
+                            infoType: SOCIAL_LINKS,
                             dynamicPropertyName: "playStore",
                           })
                         }
@@ -564,7 +573,7 @@ export default function Resume() {
                         onClick={() =>
                           handleEditResumeInfo(
                             user?.resume?.socialLinks?.behanceLink,
-                            "singleSocialLink",
+                            SINGLE_SOCIAL_LINK,
                             "Behance link"
                           )
                         }
@@ -573,7 +582,7 @@ export default function Resume() {
                         className={styles.deleteIcon}
                         onClick={() =>
                           deleteResumeInfo({
-                            infoType: "socialLinks",
+                            infoType: SOCIAL_LINKS,
                             dynamicPropertyName: "behanceLink",
                           })
                         }
@@ -596,7 +605,7 @@ export default function Resume() {
                         onClick={() =>
                           handleEditResumeInfo(
                             user?.resume?.socialLinks?.otherLink,
-                            "singleSocialLink",
+                            SINGLE_SOCIAL_LINK,
                             "Other link"
                           )
                         }
@@ -605,7 +614,7 @@ export default function Resume() {
                         className={styles.deleteIcon}
                         onClick={() =>
                           deleteResumeInfo({
-                            infoType: "socialLinks",
+                            infoType: SOCIAL_LINKS,
                             dynamicPropertyName: "otherLink",
                           })
                         }
@@ -617,9 +626,7 @@ export default function Resume() {
 
               <div
                 className={styles.addNewInfo}
-                onClick={() =>
-                  handleSetModalType("socialLinks", "Social links")
-                }
+                onClick={() => handleSetModalType(SOCIAL_LINKS, "Social links")}
               >
                 <BiPlus className={styles.plusIcon} />
                 <span>Add portfolio/ social links</span>
@@ -655,7 +662,7 @@ export default function Resume() {
                             onClick={() =>
                               handleEditResumeInfo(
                                 additionalDetail,
-                                "additionalDetails",
+                                ADDITIONAL_DETAILS,
                                 "Edit additionalDetails details"
                               )
                             }
@@ -665,7 +672,7 @@ export default function Resume() {
                             onClick={() =>
                               deleteResumeInfo({
                                 infoId: additionalDetail?._id,
-                                infoType: "additionalDetails",
+                                infoType: ADDITIONAL_DETAILS,
                               })
                             }
                           />
@@ -679,7 +686,7 @@ export default function Resume() {
               <div
                 className={styles.addNewInfo}
                 onClick={() =>
-                  handleSetModalType("additionalDetails", "Additional details")
+                  handleSetModalType(ADDITIONAL_DETAILS, "Additional details")
                 }
               >
                 <BiPlus className={styles.plusIcon} />
