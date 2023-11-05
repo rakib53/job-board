@@ -59,12 +59,11 @@
 }
 
 .allJobContainer {
-  height: 100vh;
   display: flex;
   gap: 20px;
   padding: 30px 0;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* Webkit-based browser scrollbar styles (Chrome, Safari) */
@@ -127,10 +126,6 @@
 }
 
 @media screen and (max-width: 991px) {
-  .allJobContainer {
-    height: 2000px;
-  }
-
   .filterAndJobWrapper {
     display: flex;
     flex-direction: column;

@@ -102,8 +102,8 @@ export default function Resume() {
 
         <h2 className={styles.resumeText}>Resume</h2>
         <span className={styles.note}>
-          Whenever you apply to an jobs or fresher job, this is the resume that
-          the employer will see. Always make sure it is up to date.
+          Whenever you apply to a job, this is the resume that the employer will
+          see. Always make sure it is up to date.
         </span>
         <div className={styles.resumeWrapper}>
           <div className={styles.resumeHeader}>
