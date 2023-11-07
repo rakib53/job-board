@@ -77,7 +77,12 @@ export default function Preference() {
           <h3 className={styles.greetingTag}>Review your Preference</h3>
           <p
             className={styles.greeting}
-            style={{ fontSize: "16px", width: "500px", margin: "0 auto" }}
+            style={{
+              fontSize: "16px",
+              maxWidth: "500px",
+              width: "100%",
+              margin: "0 auto",
+            }}
           >
             We'have autofilled your preferences matching the job youre looking
             for

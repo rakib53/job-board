@@ -1,10 +1,10 @@
 .findYourJobSection {
+  width: 100%;
   padding: 50px 0;
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center;
-  background-size: contain;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
-    url("../../../public/jobFindingBg.jpg");
+  background-repeat: no-repeat;
+  background-image: url("../../../public/jobFindingBg.jpg");
 }
 
 .pageTitle {
@@ -17,12 +17,14 @@
 
 .pageDesc {
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--primary-font);
+  font-weight: 500;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
 .dreamJob {
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 @media screen and (max-width: 991px) {
@@ -47,5 +49,9 @@
     line-height: 32px;
     font-size: 26px;
     margin-bottom: 5px;
+  }
+
+  .pageDesc {
+    font-weight: 500;
   }
 }

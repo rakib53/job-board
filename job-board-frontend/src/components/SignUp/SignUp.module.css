@@ -279,6 +279,7 @@
 .signUpContent {
   max-width: 650px;
   width: 100%;
+  padding: 10px;
 }
 
 .progressBar {
@@ -467,6 +468,10 @@ label {
     color: #92929d;
     margin-bottom: 15px;
   }
+
+  .signUpContent {
+    padding: 15px;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -480,6 +485,11 @@ label {
     font-size: 14px;
     color: #92929d;
     margin-bottom: 10px;
+  }
+
+  .option {
+    padding: 8px 10px;
+    font-size: 13px;
   }
 }
 

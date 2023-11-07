@@ -19,6 +19,7 @@ export const authApi = apiSlice.injectEndpoints({
     getUserInfo: builder.query({
       query: () => "api/userInfo",
       providesTags: ["getUser"],
+      keepUnusedDataFor: 0,
     }),
     updateUserData: builder.mutation({
       query: (data) => ({

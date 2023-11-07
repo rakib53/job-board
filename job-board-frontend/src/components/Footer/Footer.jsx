@@ -13,8 +13,9 @@ export default function Footer() {
           <div className={styles.logoAndDesc}>
             <img className={styles.logo} src={LOGO} alt="" />
             <p className={styles.aboutCompany}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae,
-              quae. Rerum ab ipsa saepe repellat id mollitia!
+              Explore opportunities to grow together with jobIT. We believe in
+              diversity and equal opportunities for all. Join us in creating an
+              inclusive job market.
             </p>
           </div>
           <div>

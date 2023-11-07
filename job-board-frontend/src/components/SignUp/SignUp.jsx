@@ -108,6 +108,7 @@ export default function SignUp() {
         navigate("/personal-info", { replace: true, state: location });
       }
       if (registrationResponse?.user?.role === "employeer") {
+        console.log("Hello");
         navigate("/employeer/organization");
       }
     }

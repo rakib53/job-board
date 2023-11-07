@@ -187,3 +187,33 @@
   padding: 200px 0;
 }
 /* Bar chart css end here */
+
+@media screen and (max-width: 1024px) {
+  .appViewScheduleAndMessagedWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .staticCard {
+    flex-basis: 20%;
+    padding: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .appViewScheduleAndMessagedWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .staticCard {
+    padding: 20px;
+    border-radius: 4px;
+    flex: 1;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}

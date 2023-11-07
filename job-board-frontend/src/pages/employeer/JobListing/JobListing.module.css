@@ -138,12 +138,21 @@
   font-weight: 600;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
   .noJobFoundWrapper {
     display: flex;
     height: 80vh;
     align-items: center;
     margin-top: 0;
     justify-content: center;
+  }
+  .myJob {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ebebebdd;
   }
 }

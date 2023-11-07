@@ -33,7 +33,7 @@ function App() {
 
   return !authChecked ? (
     <div className="initialLoadingWrapper">
-      <div class="initialLoader"></div>
+      <div className="initialLoader"></div>
     </div>
   ) : (
     <div>

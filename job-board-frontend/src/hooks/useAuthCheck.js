@@ -6,7 +6,11 @@ import { getUserInfo } from "../features/auth/authSlice";
 const useAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(false);
   const { token, user } = useSelector((state) => state.authSlice);
-  const { data: userData, isLoading, isError } = useGetUserInfoQuery();
+  const {
+    data: userData,
+    isLoading,
+    isError,
+  } = useGetUserInfoQuery(undefined, { skip: !token });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,7 +22,7 @@ const useAuthCheck = () => {
       dispatch(getUserInfo(userData?.user));
       setIsAuth(true);
     }
-  }, [isError, isLoading, userData?.user, userData?.user?._id]);
+  }, [isLoading, isError, token]);
 
   return isAuth;
 };
